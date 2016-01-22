@@ -13,8 +13,6 @@ def index():
     mfr_json = json.loads(xsl)
     mfr_json = mfr_json["icestats"]["source"]
     mfr_json.pop()
-    mfr_json.pop()
-    mfr_json.pop()
     mfr_json = mfr_json.pop()
     return render_template('index.html', playing=str(mfr_json["title"]), viewers=mfr_json["listeners"])
 
@@ -24,8 +22,6 @@ def update_radio_subtxt():
     xsl = response.read()
     mfr_json = json.loads(xsl)
     mfr_json = mfr_json["icestats"]["source"]
-    mfr_json.pop()
-    mfr_json.pop()
     mfr_json.pop()
     mfr_json = mfr_json.pop()
     return "<strong>Currently playing: </strong>" + str(mfr_json["title"]) + " - <strong>Currently viewing: </strong>" + str(mfr_json["listeners"])
