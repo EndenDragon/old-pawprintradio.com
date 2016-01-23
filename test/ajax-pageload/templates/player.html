@@ -1,0 +1,31 @@
+</div>
+    <!-- Bootstrap Player -->
+    <link href="{{ url_for('static', filename='bootstrap-player.css') }}" type="text/css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="col-md-6">
+        <audio controls>
+          <!--<source src="http://www.w3schools.com/html/horse.ogg" type="audio/ogg" />-->
+          <source src="http://radio.mane-frame.com:8000/stream-128.mp3" type="audio/mpeg" />
+          <a href="http://radio.mane-frame.com:8000/stream-128.mp3">mane-frame</a>
+          An html5-capable browser is required to play this audio. 
+        </audio>
+        <p id="update_radio_subtxt"><strong>Currently playing: </strong>{{ playing }} - <strong>Currently viewing: </strong>{{ viewers }}</p>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='bootstrap-player.js') }}"></script>
+        <script>
+      setInterval(                               //Periodically 
+        function()
+        {
+          $.get( "/update_radio_subtxt", function( data ) {
+            $( "#update_radio_subtxt" ).html( data );
+          });
+        },
+        10000);                                    // And do it every 10 secs
+    </script>
+        
+        
