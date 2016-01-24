@@ -1,0 +1,3 @@
+True
+#Sets the debug mode of Flask. DO NOT USE THIS IN LIVE PRODUCTION! HUGE SECURITY ISSUE.
+#Use either True or False on the first line. True enables debug mode. Do not add any text BEFORE the boolean on line one of this file.

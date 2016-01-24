@@ -2,8 +2,13 @@
 from flask import Flask, render_template
 import json
 import urllib2
+import os
 
 app = Flask(__name__)
+
+def file_get_contents(filename):
+    with open(os.path.dirname(os.path.realpath(__file__)) + "/" + filename) as f:
+        return f.read()
 
 def getPlaying():
     response = urllib2.urlopen('http://radio.mane-frame.com/status-json.xsl')
@@ -41,6 +46,7 @@ def update_radio_subtxt():
     #return "test"
 
 if __name__ == "__main__":
-    app.debug = True
-    app.host = '0.0.0.0'
+    app.debug = "True" == file_get_contents("debugMode")[0:4]
+    if app.debug == True:
+        print "\n------------------------------\nWarning: Debug is set to TRUE. Do not use debug in live production as it poses a security issue.\nTo turn debug off, please change 'True' to 'False' in the 'debugMode' file.\n------------------------------\n"
     app.run()
