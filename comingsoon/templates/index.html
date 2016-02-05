@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Website Coming Soon - Mane Frame Radio</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="http://getbootstrap.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/cover/cover.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap-player.css') }}" type="text/css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Mane Frame Radio</h3>
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <div class="cover-heading">
+            <h1>Coming to a web browser near you.</h1>
+            </div>
+            <img src="{{ url_for('static', filename='silverleaf.png') }}">
+            <p class="lead">
+              <a href="https://twitter.com/ManeFrameRadio" class="btn btn-lg btn-default"><i class="fa fa-twitter"></i></a>
+              <a href="https://www.facebook.com/Mane-Frame-Radio-1541789809439439/?fref=ts" class="btn btn-lg btn-default"><i class="fa fa-facebook"></i></a>
+              <a href="mailto:ManeFrameRadio@gmail.com" class="btn btn-lg btn-default"><i class="fa fa-envelope"></i></a>
+            </p>
+        <audio controls>
+          <!--<source src="http://www.w3schools.com/html/horse.ogg" type="audio/ogg" />-->
+          <source src="http://radio.mane-frame.com:8000/stream-128.mp3" type="audio/mpeg" />
+          <a href="http://radio.mane-frame.com:8000/stream-128.mp3">mane-frame</a>
+          An html5-capable browser is required to play this audio. 
+        </audio>
+        <p id="update_radio_subtxt"><strong>Currently playing: </strong>{{ playing }} - <strong>Currently viewing: </strong>{{ viewers }}</p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>(C) 2016 Mane Frame Radio. Coming soon page by @EndenDragon.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"><\/script>')</script>
+    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap-player.js') }}"></script>
+        <script>
+      setInterval(                               //Periodically 
+        function()
+        {
+          $.get( "/update_radio_subtxt", function( data ) {
+            $( "#update_radio_subtxt" ).html( data );
+          });
+        },
+        10000);                                    // And do it every 10 secs
+    </script>
+  </body>
+</html>
