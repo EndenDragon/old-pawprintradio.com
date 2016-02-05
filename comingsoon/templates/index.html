@@ -48,24 +48,24 @@
             <div class="cover-heading">
             <h1>Coming to a web browser near you.</h1>
             </div>
-            <img src="{{ url_for('static', filename='silverleaf.png') }}">
+            <img src="{{ url_for('static', filename='silverleaf.png') }}" style="width: 100%;">
             <p class="lead">
-              <a href="https://twitter.com/ManeFrameRadio" class="btn btn-lg btn-default"><i class="fa fa-twitter"></i></a>
-              <a href="https://www.facebook.com/Mane-Frame-Radio-1541789809439439/?fref=ts" class="btn btn-lg btn-default"><i class="fa fa-facebook"></i></a>
-              <a href="mailto:ManeFrameRadio@gmail.com" class="btn btn-lg btn-default"><i class="fa fa-envelope"></i></a>
+              <a href="https://twitter.com/ManeFrameRadio" class="btn btn-lg btn-info"><i class="fa fa-twitter"></i></a>
+              <a href="https://www.facebook.com/Mane-Frame-Radio-1541789809439439/?fref=ts" class="btn btn-lg btn-primary"><i class="fa fa-facebook"></i></a>
+              <a href="mailto:ManeFrameRadio@gmail.com" class="btn btn-lg btn-success"><i class="fa fa-envelope"></i></a>
             </p>
         <audio controls>
           <!--<source src="http://www.w3schools.com/html/horse.ogg" type="audio/ogg" />-->
           <source src="http://radio.mane-frame.com:8000/stream-128.mp3" type="audio/mpeg" />
           <a href="http://radio.mane-frame.com:8000/stream-128.mp3">mane-frame</a>
-          An html5-capable browser is required to play this audio. 
+          Sorry, An html5-capable browser is required to play this audio. 
         </audio>
         <p id="update_radio_subtxt"><strong>Currently playing: </strong>{{ playing }} - <strong>Currently viewing: </strong>{{ viewers }}</p>
           </div>
 
           <div class="mastfoot">
             <div class="inner">
-              <p>(C) 2016 Mane Frame Radio. Coming soon page by @EndenDragon.</p>
+              <p>(C) 2016 Mane Frame Radio. Coming soon page by <a href="https://twitter.com/EndenDragon">@EndenDragon</a>.</p>
             </div>
           </div>
 
