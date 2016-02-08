@@ -1,8 +1,6 @@
-body {
-}
 @media (min-width: 768px) {
-	.navbar-brand-centered {
-	position: absolute;
+    .navbar-brand-centered {
+    position: absolute;
 	left: 45%;
 	display: block;
 	width: 20%;
@@ -148,4 +146,30 @@ body {
 }
 .navbar-custom .navbar-link:hover {
   color: #e69685;
+}
+
+/*Jumbotron*/
+.jumbotron {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  background-image: url('http://znc.mane-frame.com/static/silverleaf.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.jumbotron img {
+  display: block;
+}
+
+.jumbotron {
+display: block;
+margin: 0 auto;
+position: relative;
+background: linear-gradient(to bottom, rgba(255, 26, 2, 0.2) 0%, rgba(127, 13, 1, 1) 100%);
+}
+.jumbobg {
+background-image: url('http://znc.mane-frame.com/static/silverleaf.png');
+background-repeat: no-repeat;
+background-attachment: fixed;
 }
