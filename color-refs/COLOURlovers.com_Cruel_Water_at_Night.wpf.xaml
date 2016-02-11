@@ -1,0 +1,6 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<SolidColorBrush x:Key="Brush1" Color="#FF030C22" />
+	<SolidColorBrush x:Key="Brush2" Color="#FF20293F" />
+	<SolidColorBrush x:Key="Brush3" Color="#FF404749" />
+	<SolidColorBrush x:Key="Brush4" Color="#FFA9B0B3" />
+</ResourceDictionary>

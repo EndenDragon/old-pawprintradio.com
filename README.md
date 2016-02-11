@@ -3,4 +3,4 @@
 How to install dependecies:
 `python 2.7.9 +`
 `pip install Flask`
-`pip install Flask-OAuth`
+`pip install xmltodict`

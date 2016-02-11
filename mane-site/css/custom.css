@@ -1,175 +1,214 @@
+@import url(https://fonts.googleapis.com/css?family=Monofett);
+@import url(https://fonts.googleapis.com/css?family=Sansita+One);
+@import url(https://fonts.googleapis.com/css?family=Permanent+Marker);
+html,
+body {
+    background-color: #030C22;
+    height: 100%;
+    margin: 0;
+}
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #A9B0B3;
+    margin: 1em 0;
+    padding: 0;
+}
+.silverleaf-ee {
+    /* silverleaf stares into your soul... */
+    
+    background: url(../img/stare.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+/*Center Nav Logo */
+
 @media (min-width: 768px) {
     .navbar-brand-centered {
-    position: absolute;
-	left: 45%;
-	display: block;
-	width: 20%;
-	text-align: center;
-	background-color: transparent;
-	padding-right:100px;
-  }
+        position: absolute;
+        left: 45%;
+        display: block;
+        width: 20%;
+        text-align: center;
+        background-color: transparent;
+        padding-right: 100px;
+    }
 }
 .logoimage {
-  width:50px;
-  position: relative;
-  top: -15px;
-  left: -20px;
+    width: 50px;
+    position: relative;
+    top: -15px;
+    left: -20px;
 }
 @media (min-width: 768px) {
-  .logoimage {
-  width:100px;
-  position: relative;
-  top: -35px;
-  left: -20px;
+    .logoimage {
+        width: 100px;
+        position: relative;
+        top: -35px;
+        left: -20px;
+    }
 }
-}
-.navbar>.container .navbar-brand-centered,  .navbar>.container-fluid .navbar-brand-centered {
-	margin-left: -80px;
+.navbar>.container .navbar-brand-centered,
+.navbar>.container-fluid .navbar-brand-centered {
+    margin-left: -80px;
 }
 .navbar-fixed-top {
-  margin-top:0px;
+    margin-top: 0px;
 }
-
 @media (min-width: 768px) {
-  .navbar-fixed-top {
-  margin-top:30px;
+    .navbar-fixed-top {
+        margin-top: 30px;
+    }
 }
+@media (min-width: 992px) {
+    .sidebar {
+        padding-top: 70px;
+    }
 }
-
 /*Navbar Custom Color*/
+
 .navbar-custom {
-  background-color: #910f0f;
-  border-color: #730c0c;
-  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#bf1414), to(#910f0f));
-  background-image: -webkit-linear-gradient(top, #bf1414, 0%, #910f0f, 100%);
-  background-image: -moz-linear-gradient(top, #bf1414 0%, #910f0f 100%);
-  background-image: linear-gradient(to bottom, #bf1414 0%, #910f0f 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffbf1414', endColorstr='#ff910f0f', GradientType=0);
+    background-color: #404749;
+    border-color: #313637;
+    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#586164), to(#404749));
+    background-image: -webkit-linear-gradient(top, #586164, 0%, #404749, 100%);
+    background-image: -moz-linear-gradient(top, #586164 0%, #404749 100%);
+    background-image: linear-gradient(to bottom, #586164 0%, #404749 100%);
+    background-repeat: repeat-x;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff586164', endColorstr='#ff404749', GradientType=0);
 }
 .navbar-custom .navbar-brand {
-  color: #f5d7bc;
+    color: #bac2c5;
 }
 .navbar-custom .navbar-brand:hover,
 .navbar-custom .navbar-brand:focus {
-  color: #eebd90;
-  background-color: transparent;
+    color: #9eaaae;
+    background-color: transparent;
 }
 .navbar-custom .navbar-text {
-  color: #f5d7bc;
+    color: #bac2c5;
 }
 .navbar-custom .navbar-nav > li > a {
-  color: #f5d7bc;
+    font-size: 15px;
+    color: #bac2c5;
+    font-family: 'Permanent Marker', cursive;
+}
+@media (min-width: 1280px) {
+    .navbar-custom .navbar-nav > li > a {
+        font-size: 25px;
+        color: #bac2c5;
+        font-family: 'Permanent Marker', cursive;
+    }
+}
+@media (min-width: 1430px) {
+    .navbar-custom .navbar-nav > li > a {
+        font-size: 30px;
+        color: #bac2c5;
+        font-family: 'Permanent Marker', cursive;
+    }
 }
 .navbar-custom .navbar-nav > li > a:hover,
 .navbar-custom .navbar-nav > li > a:focus {
-  color: #e69685;
-  background-color: transparent;
+    color: #f5f7f7;
+    background-color: transparent;
 }
 .navbar-custom .navbar-nav > .active > a,
 .navbar-custom .navbar-nav > .active > a:hover,
 .navbar-custom .navbar-nav > .active > a:focus {
-  color: #e69685;
-  background-color: #730c0c;
-  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#730c0c), to(#a11111));
-  background-image: -webkit-linear-gradient(top, #730c0c, 0%, #a11111, 100%);
-  background-image: -moz-linear-gradient(top, #730c0c 0%, #a11111 100%);
-  background-image: linear-gradient(to bottom, #730c0c 0%, #a11111 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff730c0c', endColorstr='#ffa11111', GradientType=0);
+    color: #f5f7f7;
+    background-color: #313637;
+    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#313637), to(#485053));
+    background-image: -webkit-linear-gradient(top, #313637, 0%, #485053, 100%);
+    background-image: -moz-linear-gradient(top, #313637 0%, #485053 100%);
+    background-image: linear-gradient(to bottom, #313637 0%, #485053 100%);
+    background-repeat: repeat-x;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff313637', endColorstr='#ff485053', GradientType=0);
 }
 .navbar-custom .navbar-nav > .disabled > a,
 .navbar-custom .navbar-nav > .disabled > a:hover,
 .navbar-custom .navbar-nav > .disabled > a:focus {
-  color: #cccccc;
-  background-color: transparent;
+    color: #cccccc;
+    background-color: transparent;
 }
 .navbar-custom .navbar-toggle {
-  border-color: #dddddd;
+    border-color: #dddddd;
 }
 .navbar-custom .navbar-toggle:hover,
 .navbar-custom .navbar-toggle:focus {
-  background-color: #dddddd;
+    background-color: #dddddd;
 }
 .navbar-custom .navbar-toggle .icon-bar {
-  background-color: #cccccc;
+    background-color: #cccccc;
 }
 .navbar-custom .navbar-collapse,
 .navbar-custom .navbar-form {
-  border-color: #710c0c;
+    border-color: #2f3436;
 }
 .navbar-custom .navbar-nav > .dropdown > a:hover .caret,
 .navbar-custom .navbar-nav > .dropdown > a:focus .caret {
-  border-top-color: #e69685;
-  border-bottom-color: #e69685;
+    border-top-color: #f5f7f7;
+    border-bottom-color: #f5f7f7;
 }
 .navbar-custom .navbar-nav > .open > a,
 .navbar-custom .navbar-nav > .open > a:hover,
 .navbar-custom .navbar-nav > .open > a:focus {
-  background-color: #730c0c;
-  color: #e69685;
+    background-color: #313637;
+    color: #f5f7f7;
 }
 .navbar-custom .navbar-nav > .open > a .caret,
 .navbar-custom .navbar-nav > .open > a:hover .caret,
 .navbar-custom .navbar-nav > .open > a:focus .caret {
-  border-top-color: #e69685;
-  border-bottom-color: #e69685;
+    border-top-color: #f5f7f7;
+    border-bottom-color: #f5f7f7;
 }
 .navbar-custom .navbar-nav > .dropdown > a .caret {
-  border-top-color: #f5d7bc;
-  border-bottom-color: #f5d7bc;
+    border-top-color: #bac2c5;
+    border-bottom-color: #bac2c5;
 }
 @media (max-width: 767) {
-  .navbar-custom .navbar-nav .open .dropdown-menu > li > a {
-    color: #f5d7bc;
-  }
-  .navbar-custom .navbar-nav .open .dropdown-menu > li > a:hover,
-  .navbar-custom .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #e69685;
-    background-color: transparent;
-  }
-  .navbar-custom .navbar-nav .open .dropdown-menu > .active > a,
-  .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:hover,
-  .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #e69685;
-    background-color: #730c0c;
-  }
-  .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a,
-  .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:hover,
-  .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:focus {
-    color: #cccccc;
-    background-color: transparent;
-  }
+    .navbar-custom .navbar-nav .open .dropdown-menu > li > a {
+        color: #bac2c5;
+    }
+    .navbar-custom .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-custom .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #f5f7f7;
+        background-color: transparent;
+    }
+    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #f5f7f7;
+        background-color: #313637;
+    }
+    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+        color: #cccccc;
+        background-color: transparent;
+    }
 }
 .navbar-custom .navbar-link {
-  color: #f5d7bc;
+    color: #bac2c5;
 }
 .navbar-custom .navbar-link:hover {
-  color: #e69685;
+    color: #f5f7f7;
 }
-
-/*Jumbotron*/
-.jumbotron {
-  display: block;
-  margin: 0 auto;
-  position: relative;
-  background-image: url('http://znc.mane-frame.com/static/silverleaf.png');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-.jumbotron img {
-  display: block;
-}
+/* Jumbotron */
 
 .jumbotron {
-display: block;
-margin: 0 auto;
-position: relative;
-background: linear-gradient(to bottom, rgba(255, 26, 2, 0.2) 0%, rgba(127, 13, 1, 1) 100%);
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    background: linear-gradient(to bottom, rgba(64, 71, 73, 0.2) 0%, rgba(64, 71, 73, 1) 90%);
 }
 .jumbobg {
-background-image: url('http://znc.mane-frame.com/static/silverleaf.png');
-background-repeat: no-repeat;
-background-attachment: fixed;
+    background: url('http://znc.mane-frame.com/static/silverleaf.png') fixed no-repeat, url('../img/banner-1008444.jpg') no-repeat, grey;
+}
+/* Panel */
+
+.panel-default {
+    background-color: #20293F;
+    border-color: #50618C;
 }
