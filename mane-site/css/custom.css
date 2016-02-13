@@ -1,11 +1,15 @@
+/* Import Font Face */
 @import url(https://fonts.googleapis.com/css?family=Monofett);
 @import url(https://fonts.googleapis.com/css?family=Sansita+One);
 @import url(https://fonts.googleapis.com/css?family=Permanent+Marker);
+
+/* Global Definitions */
 html,
 body {
     background-color: #030C22;
     height: 100%;
     margin: 0;
+    max-width: 100%;
 }
 hr {
     display: block;
@@ -15,16 +19,16 @@ hr {
     margin: 1em 0;
     padding: 0;
 }
+
+/* silverleaf stares into your soul... */
 .silverleaf-ee {
-    /* silverleaf stares into your soul... */
-    
     background: url(../img/stare.png);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
 }
-/*Center Nav Logo */
 
+/*Center Nav Logo */
 @media (min-width: 768px) {
     .navbar-brand-centered {
         position: absolute;
@@ -67,8 +71,8 @@ hr {
         padding-top: 70px;
     }
 }
-/*Navbar Custom Color*/
 
+/*Navbar Custom Color*/
 .navbar-custom {
     background-color: #404749;
     border-color: #313637;
@@ -195,20 +199,144 @@ hr {
 .navbar-custom .navbar-link:hover {
     color: #f5f7f7;
 }
-/* Jumbotron */
 
+/* Jumbotron */
 .jumbotron {
     display: block;
     margin: 0 auto;
     position: relative;
-    background: linear-gradient(to bottom, rgba(64, 71, 73, 0.2) 0%, rgba(64, 71, 73, 1) 90%);
+    background: linear-gradient(to bottom, rgba(64, 71, 73, 0.5) 0%, rgba(32, 41, 63, 1) 100%);
+    height: 100vh;
 }
 .jumbobg {
     background: url('http://znc.mane-frame.com/static/silverleaf.png') fixed no-repeat, url('../img/banner-1008444.jpg') no-repeat, grey;
 }
-/* Panel */
+@media (min-width: 768px) {
+    .jumbobg {
+        background: url('http://znc.mane-frame.com/static/silverleaf.png') fixed no-repeat bottom left, url('../img/banner-1008444.jpg') no-repeat, grey;
+        background-size: 30vmax, auto;
+    }
+}
 
+/* Text Definitions */
+.jumbo-sm-text {
+    font-family: 'Sansita One', cursive;
+    font-size: 3.9vmax
+}
+.jumbo-eyecatching-text {
+    font-family: 'Monofett', cursive;
+    font-size: 6.9vmax;
+    color: #e5aaff;
+}
+.small-text-heading {
+    font-family: 'Sansita One', cursive;
+    text-decoration: underline;
+    text-align: center;
+}
+.blog-title {
+    font-size: 50px;
+}
+.blog-timestamp {
+    font-size: 30px;
+}
+.blog-content {
+    font-size: 20px;
+}
+
+/* Panel */
 .panel-default {
     background-color: #20293F;
     border-color: #50618C;
+}
+
+/* Container */
+.container {
+    padding: 60px;
+    color: #e6e6e6;
+}
+
+/* Music Player */
+footer {
+    position: fixed;
+    height: auto;
+    bottom: 0;
+    width: 100%;
+}
+.audiojs {
+    height: 22px;
+    background: #404040;
+    width: 100px;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444), color-stop(0.5, #555), color-stop(0.51, #444), color-stop(1, #444));
+    background-image: -moz-linear-gradient(center top, #444 0%, #555 50%, #444 51%, #444 100%);
+    -webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+    -o-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+}
+.audiojs .play-pause {
+    width: 100px;
+    height: 20px;
+    padding: 0px 8px 0px 0px;
+}
+.audiojs .played {
+    display: none;
+}
+.audiojs .duration {
+    display: none;
+}
+.audiojs .time {
+    display: none;
+}
+.audiojs p {
+    width: 25px;
+    height: 20px;
+    margin: -3px 0px 0px -1px;
+}
+.audiojs .scrubber {
+    background: transparent;
+    width: 310px;
+    height: 0px;
+    margin: 0px;
+}
+.audiojs .progress {
+    height: 10px;
+    width: 0px;
+    background: #ccc;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ccc), color-stop(0.5, #ddd), color-stop(0.51, #ccc), color-stop(1, #ccc));
+    background-image: -moz-linear-gradient(center top, #ccc 0%, #ddd 50%, #ccc 51%, #ccc 100%);
+}
+.audiojs .loaded {
+    height: 10px;
+    background: #000;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #222), color-stop(0.5, #333), color-stop(0.51, #222), color-stop(1, #222));
+    background-image: -moz-linear-gradient(center top, #222 0%, #333 50%, #222 51%, #222 100%);
+}
+.audiojs .time {
+    float: left;
+    height: 25px;
+    line-height: 25px;
+}
+.audiojs .error-message {
+    height: 24px;
+    line-height: 24px;
+}
+.track-details {
+    clear: both;
+    height: 20px;
+    width: 400px;
+    padding: 1px 6px;
+    background: #eee;
+    color: #222;
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 20px;
+    -webkit-box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.15);
+}
+.track-details:before {
+    content: '\266C ';
+}
+.track-details em {
+    font-style: normal;
+    color: #999;
 }

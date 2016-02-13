@@ -8,14 +8,16 @@
     <title>Welcome - Mane Frame Radio</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
+    
+    <!-- Custom -->
+    <link href="css/custom.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,7 +29,7 @@
 
 <body>
         <div class="col-md-7 col-md-offset-3">
-            <nav class="navbar navbar-custom navbar-fixed-top col-md-7 col-md-offset-3" role="navigation"">
+            <nav class="navbar navbar-custom navbar-fixed-top col-md-7 col-md-offset-3 animated fadeInDown" role="navigation"">
                 <div>
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
@@ -63,21 +65,21 @@
         </div>
         <div class="jumbobg">
             <div class="jumbotron">
-                <div class="container col-md-offset-3" style="padding: 60px; color: #e6e6e6;">
-                    <h1 style="font-family: 'Sansita One', cursive; font-size: 3.9vmax">Welcome to the</h1>
-                    <h1 style="font-family: 'Monofett', cursive; font-size: 6.9vmax; color: #e5aaff;">Mane Frame</h1>
-                    <h1 style="font-family: 'Sansita One', cursive; font-size: 3.9vmax">Radio</h1>
+                <div class="container">
+                    <div class="jumbo-sm-text animated fadeInDown">Welcome to the</div>
+                    <div class="jumbo-eyecatching-text animated zoomIn">Mane Frame</div>
+                    <div class="jumbo-sm-text animated fadeInUp">Radio</div>
                 </div>
             </div>
         </div>
         <div class="container-fluid col-md-12 silverleaf-ee" style="color: white;">
             <div class="col-md-9">
-                  <h1 style="font-family: 'Sansita One', cursive; text-decoration: underline; text-align: center;">Latest Blog Entry</h1>
+                  <h1 class="small-text-heading">Latest Blog Entry</h1>
                   <div class="panel panel-default">
                         <div class="panel-body">
-                              <h1 style="font-size: 60px;">Welcome</h1>
-                              <p style="font-size: 30px;">Thu, 21 Jan 2016 22:59:55</p> <hr>
-                              <p style="font-size: 20px;">Hello Word :3<br/></p>
+                              <h1 class="blog-title">Welcome</h1>
+                              <p class="blog-timestamp">Thu, 21 Jan 2016 22:59:55</p> <hr>
+                              <p class="blog-content">Hello Word :3<br/></p>
                         </div>
                   </div>
             </div>
@@ -104,11 +106,42 @@
                   </div>
             </div>
         </div>
+        <footer>
+          <div class="">
+          <div class="">
+          <audio src="http://radio.mane-frame.com:8000/stream-128.mp3" preload="auto"></audio>
+          </div>
+          <div class="track-details" id="update_radio_subtxt">
+            <em>Getting track data in 10 seconds...</em>
+          </div>
+          </div>
+        </footer>
+    
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+    
+    <!-- Audio js -->
+    <script src="https://cdn.jsdelivr.net/audiojs/0.1/audio.min.js"></script>
+    
+    <script>
+      var a = audiojs;
+      a.events.ready(function() {
+        var a1 = a.createAll();
+      });
+    </script>
+            <script>
+      setInterval(                               //Periodically 
+        function()
+        {
+          $.get( "http://mane-frame.com/update_radio_subtxt2", function( data ) {
+            $( "#update_radio_subtxt" ).html( data );
+          });
+        },
+        10000);                                    // And do it every 10 secs
+    </script>
 </body>
 
 </html>
