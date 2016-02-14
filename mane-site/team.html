@@ -127,11 +127,12 @@
                         <div class="panel-body">
                           <div class="media">
                             <div class="media-left media-middle">
-                              <img class="media-object img-circle" src="img/staff/vapidpixel.png" alt="EndenDragon">
+                              <img class="media-object img-circle" src="img/staff/vapidpixel.png" alt="Vapid Pixel">
                             </div>
                             <div class="media-body">
                               <div class="media-heading">
                                 Vapid Pixel
+                                <a href="http://vapidpixel.deviantart.com"><button type="button" class="btn btn-success"><i class="fa fa-deviantart"></i></button></a>
                               </div>
                               <p class="media-team-position">Facebook Admin</p>
                               <p>Vapid Pixel is a relatively late addition to the Herd, having only been active in the Brony fandom since late 2014 when he was drawn in by the impressive fan creations (especially the music).  Quiet and reserved, he often spends his free time listening to music, playing video games, or drawing.</p>
@@ -201,7 +202,7 @@
         <footer>
           <audio src="http://radio.mane-frame.com:8000/stream-128.mp3" preload="auto"></audio>
           <div class="track-details" id="update_radio_subtxt">
-            <em>Getting track data in 10 seconds...</em>
+            <em>Your javascript isn't enabled... D:</em>
           </div>
         </footer>
 
@@ -229,6 +230,10 @@
           });
         },
         10000);                                    // And do it every 10 secs
+
+        $.get( "http://mane-frame.com/update_radio_subtxt2", function( data ) {
+          $( "#update_radio_subtxt" ).html( data );
+        });
     </script>
 </body>
 
