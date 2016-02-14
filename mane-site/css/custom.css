@@ -233,6 +233,12 @@ hr {
     text-decoration: underline;
     text-align: center;
 }
+.large-text-heading {
+    font-family: 'Sansita One', cursive;
+    text-decoration: underline;
+    text-align: left;
+    font-size: 100px;
+}
 .blog-title {
     font-size: 50px;
 }
@@ -241,6 +247,9 @@ hr {
 }
 .blog-content {
     font-size: 20px;
+}
+.heading-subtxt {
+    font-size: 40px;
 }
 
 /* Panel */
@@ -339,4 +348,16 @@ footer {
 .track-details em {
     font-style: normal;
     color: #999;
+}
+
+/* Media */
+img.media-object {
+  width: 100px;
+}
+.media-heading {
+  font-size: 30px;
+}
+.media-team-position {
+  color: #a1a1a1;
+  font-size: 20px;
 }
