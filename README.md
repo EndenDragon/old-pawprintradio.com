@@ -6,8 +6,8 @@ This is the Mane Frame Radio's website. It is currently actively developed by th
 **The readme will be updated periodically**
 
 ## Table of Contents
-* [Required Dependencies](#required-dependancies)
-* [Optional Dependencies](#optional-dependancies)
+* [Required Dependencies](#required-dependencies)
+* [Optional Dependencies](#optional-dependencies)
 * [Installation Instructions](#installation-instructions)
 * [Significant Files Breakdown](#significant-files-breakdown)
 * [Contributers](#contributers)
