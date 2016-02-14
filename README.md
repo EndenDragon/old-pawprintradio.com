@@ -26,7 +26,7 @@ This is the Mane Frame Radio's website. It is currently actively developed by th
 * Discord App (To scream at EndenDragon in case there is a problem on his side)
 
 ## Installation Instructions
-1. Gether the required dependencies
+1. Gather the required dependencies
 2. Download the zip tarball or clone the repository
 3. Locate any of the `.py` files within the folder and run them using python. For example: `python mfr-player-demo.py`
 4. Open up a web browser and point to the ip address shown in the window
@@ -71,6 +71,7 @@ This is the Mane Frame Radio's website. It is currently actively developed by th
 * Krillik
 * Vapid Pixel
 * toothydeerrrrrr
+* neonstrobelights
 
 ## Copyright
 Everything is All Rights Reserved by Mane Frame Radio unless specified.
