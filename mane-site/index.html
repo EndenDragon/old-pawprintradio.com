@@ -107,13 +107,9 @@
             </div>
         </div>
         <footer>
-          <div class="">
-          <div class="">
           <audio src="http://radio.mane-frame.com:8000/stream-128.mp3" preload="auto"></audio>
-          </div>
           <div class="track-details" id="update_radio_subtxt">
-            <em>Getting track data in 10 seconds...</em>
-          </div>
+            <em>Your javascript isn't enabled... D:</em>
           </div>
         </footer>
 
@@ -132,7 +128,7 @@
         var a1 = a.createAll();
       });
     </script>
-            <script>
+    <script>
       setInterval(                               //Periodically
         function()
         {
@@ -141,6 +137,10 @@
           });
         },
         10000);                                    // And do it every 10 secs
+
+        $.get( "http://mane-frame.com/update_radio_subtxt2", function( data ) {
+          $( "#update_radio_subtxt" ).html( data );
+        });
     </script>
 </body>
 
