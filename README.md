@@ -18,7 +18,6 @@ This is the Mane Frame Radio's website. It is currently actively developed by th
 * internet connection
 * python 2.7.9 +
 * Flask `pip install Flask`
-* xmltodict `pip install xmltodict`
 
 ## Optional Dependencies
 * Adobe Photoshop CS6 ~or above (To beable to view the website sketches)
@@ -28,13 +27,33 @@ This is the Mane Frame Radio's website. It is currently actively developed by th
 ## Installation Instructions
 1. Gather the required dependencies
 2. Download the zip tarball or clone the repository
-3. Locate any of the `.py` files within the folder and run them using python. For example: `python mfr-player-demo.py`
+3. Locate any of the `.py` files within the folder and run them using python. For example: `python main.py`
 4. Open up a web browser and point to the ip address shown in the window
 
 ## Significant Files Breakdown
 ```
 * mane-frame.com/
 |    * mane-site/
+|    |    * main.py
+|    |    * xml2dict.py
+|    |    * crossdomainfuncs.py
+|    |    * static/
+|    |    |    * css/
+|    |    |    |    * custom.css
+|    |    |    * templates/
+|    |    |    |    * about.html
+|    |    |    |    * blog.html
+|    |    |    |    * contact.html
+|    |    |    |    * donate.html
+|    |    |    |    * events.html
+|    |    |    |    * footer.html
+|    |    |    |    * header.html
+|    |    |    |    * index.html
+|    |    |    |    * menu.html
+|    |    |    |    * player.html
+|    |    |    |    * sidebar.html
+|    |    |    |    * team.html
+|    * mane-site-static/
 |    |    * css/
 |    |    |    * custom.css
 |    |    * img/
@@ -42,6 +61,9 @@ This is the Mane Frame Radio's website. It is currently actively developed by th
 |    |    * index.html
 |    |    * about.html
 |    |    * team.html
+|    |    * blog.html
+|    |    * donate.html
+|    |    * events.html
 |    * comingsoon/
 |    |    * templates/
 |    |    |    * index.html
