@@ -69,7 +69,7 @@ This is the Mane Frame Radio's website. It is currently actively developed by th
 |    |    |    * index.html
 |    |    * index.py
 |    |    |    * static/
-|    |    |        * silverleaf.png
+|    |    |    |   * silverleaf.png
 |    * staff/
 |    |    * list & bio.txt
 |    * Site Drawings/
