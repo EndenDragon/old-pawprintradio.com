@@ -1,0 +1,20 @@
+<div class="jumbobg">
+    <div class="jumbotron">
+        <div class="container">
+            <div class="jumbo-sm-text animated fadeInDown">Welcome to the</div>
+            <div class="jumbo-eyecatching-text animated zoomIn">Mane Frame</div>
+            <div class="jumbo-sm-text animated fadeInUp">Radio</div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid col-md-12 silverleaf-ee" style="color: white;">
+    <div class="col-md-9">
+          <h1 class="small-text-heading">Latest Blog Entry</h1>
+          <div class="panel panel-default">
+                <div class="panel-body">
+                      <h1 class="blog-title"><a href="{{ postURL }}" style="color: white;">{{ postTitle }}</a></h1>
+                      <p class="blog-timestamp">{{ postTimestamp }}</p> <hr>
+                      <span class="blog-content">{{ postContent|safe }}</span>
+                </div>
+          </div>
+    </div>

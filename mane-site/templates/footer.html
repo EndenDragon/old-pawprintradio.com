@@ -1,0 +1,85 @@
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+
+    <!-- Audio js -->
+    <script src="https://cdn.jsdelivr.net/audiojs/0.1/audio.min.js"></script>
+
+    <!-- NProgress -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js'></script>
+
+    <script>
+      var a = audiojs;
+      a.events.ready(function() {
+        var a1 = a.createAll();
+      });
+    </script>
+    <script>
+      setInterval(                               //Periodically
+        function()
+        {
+          $.get( "/update_radio_subtxt", function( data ) {
+            $( "#update_radio_subtxt" ).html( data );
+          });
+        },
+        10000);                                    // And do it every 10 secs
+
+        $.get( "/update_radio_subtxt", function( data ) {
+          $( "#update_radio_subtxt" ).html( data );
+        });
+    </script>
+    <script>
+    $(function() {
+      String.prototype.decodeHTML = function() {
+        return $("<div>", {html: "" + this}).html();
+      };
+
+      var $main = $('#main'),
+
+      init = function() {
+        // Do this when a page loads.
+      },
+
+      ajaxLoad = function(html) {
+        document.title = html
+          .match(/<title>(.*?)<\/title>/)[1]
+          .trim()
+          .decodeHTML();
+
+        init();
+        window.scrollTo(0, 0);
+        NProgress.done();
+      },
+
+      loadPage = function(href) {
+        NProgress.start();
+        $main.load(href + ' #main>', ajaxLoad);
+      };
+
+      init();
+
+      $(window).on("popstate", function(e) {
+        if (e.originalEvent.state !== null) {
+          loadPage(location.href);
+        }
+      });
+
+      $(document).on("click", "a, area", function() {
+        var href = $(this).attr("href");
+
+        if (href.indexOf(document.domain) > -1
+          || href.indexOf(':') === -1)
+        {
+          history.pushState({}, '', href);
+          loadPage(href);
+          return false;
+        }
+      });
+    });
+    </script>
+</body>
+
+</html>

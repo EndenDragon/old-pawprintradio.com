@@ -1,0 +1,26 @@
+
+        <div class="container-fluid col-md-12" style="height: 50px;">
+        </div>
+        <div class="container-fluid col-md-12 silverleaf-ee" style="color: white;">
+            <div class="col-md-9">
+              <h1 class="large-text-heading">Blog</h1>
+              <p class="heading-subtxt">Everything around Mane Frame Radio (Last 10 posts)</p>
+              {% for post in posts %}
+                <div class="panel panel-default">
+                      <div class="panel-body">
+                            <h1 class="blog-title"><a href="{{ post.url }}" style="color: white;">{{ post.title }}</a></h1>
+                            <p class="blog-timestamp">{{ post.timestamp }}</p> <hr>
+                            <span class="blog-content">{{ post.content|safe }}</span>
+                      </div>
+                </div>
+              {% else %}
+              <div class="panel panel-default">
+                    <div class="panel-body">
+                          <h1 class="blog-title">Error: No tumblr entries found</h1>
+                          <p class="blog-timestamp">Mon, Jan 1 1970 00:00:00</p> <hr>
+                          <span class="blog-content">Brought to you by <b>dumblr</b>. ~ShadowPony</span>
+                    </div>
+              </div>
+              {% endfor %}
+                  <i class="blog-content pull-right">Blog data gracefully pulled from the <a href="http://maneframeradio.tumblr.com/">Mane Frame Tumblr</a>. Check us out there!</i>
+            </div>

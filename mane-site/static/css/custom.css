@@ -1,0 +1,363 @@
+/* Import Font Face */
+@import url(https://fonts.googleapis.com/css?family=Monofett);
+@import url(https://fonts.googleapis.com/css?family=Sansita+One);
+@import url(https://fonts.googleapis.com/css?family=Permanent+Marker);
+
+/* Global Definitions */
+html,
+body {
+    background-color: #030C22;
+    height: 100%;
+    margin: 0;
+    max-width: 100%;
+}
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #A9B0B3;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/* silverleaf stares into your soul... */
+.silverleaf-ee {
+    background: url(../img/stare.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/*Center Nav Logo */
+@media (min-width: 768px) {
+    .navbar-brand-centered {
+        position: absolute;
+        left: 45%;
+        display: block;
+        width: 20%;
+        text-align: center;
+        background-color: transparent;
+        padding-right: 100px;
+    }
+}
+.logoimage {
+    width: 50px;
+    position: relative;
+    top: -15px;
+    left: -20px;
+}
+@media (min-width: 768px) {
+    .logoimage {
+        width: 100px;
+        position: relative;
+        top: -35px;
+        left: -20px;
+    }
+}
+.navbar>.container .navbar-brand-centered,
+.navbar>.container-fluid .navbar-brand-centered {
+    margin-left: -80px;
+}
+.navbar-fixed-top {
+    margin-top: 0px;
+}
+@media (min-width: 768px) {
+    .navbar-fixed-top {
+        margin-top: 30px;
+    }
+}
+@media (min-width: 992px) {
+    .sidebar {
+        padding-top: 70px;
+    }
+}
+
+/*Navbar Custom Color*/
+.navbar-custom {
+    background-color: #404749;
+    border-color: #313637;
+    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#586164), to(#404749));
+    background-image: -webkit-linear-gradient(top, #586164, 0%, #404749, 100%);
+    background-image: -moz-linear-gradient(top, #586164 0%, #404749 100%);
+    background-image: linear-gradient(to bottom, #586164 0%, #404749 100%);
+    background-repeat: repeat-x;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff586164', endColorstr='#ff404749', GradientType=0);
+}
+.navbar-custom .navbar-brand {
+    color: #bac2c5;
+}
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:focus {
+    color: #9eaaae;
+    background-color: transparent;
+}
+.navbar-custom .navbar-text {
+    color: #bac2c5;
+}
+.navbar-custom .navbar-nav > li > a {
+    font-size: 15px;
+    color: #bac2c5;
+    font-family: 'Permanent Marker', cursive;
+}
+@media (min-width: 1280px) {
+    .navbar-custom .navbar-nav > li > a {
+        font-size: 25px;
+        color: #bac2c5;
+        font-family: 'Permanent Marker', cursive;
+    }
+}
+@media (min-width: 1430px) {
+    .navbar-custom .navbar-nav > li > a {
+        font-size: 30px;
+        color: #bac2c5;
+        font-family: 'Permanent Marker', cursive;
+    }
+}
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus {
+    color: #f5f7f7;
+    background-color: transparent;
+}
+.navbar-custom .navbar-nav > .active > a,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus {
+    color: #f5f7f7;
+    background-color: #313637;
+    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#313637), to(#485053));
+    background-image: -webkit-linear-gradient(top, #313637, 0%, #485053, 100%);
+    background-image: -moz-linear-gradient(top, #313637 0%, #485053 100%);
+    background-image: linear-gradient(to bottom, #313637 0%, #485053 100%);
+    background-repeat: repeat-x;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff313637', endColorstr='#ff485053', GradientType=0);
+}
+.navbar-custom .navbar-nav > .disabled > a,
+.navbar-custom .navbar-nav > .disabled > a:hover,
+.navbar-custom .navbar-nav > .disabled > a:focus {
+    color: #cccccc;
+    background-color: transparent;
+}
+.navbar-custom .navbar-toggle {
+    border-color: #dddddd;
+}
+.navbar-custom .navbar-toggle:hover,
+.navbar-custom .navbar-toggle:focus {
+    background-color: #dddddd;
+}
+.navbar-custom .navbar-toggle .icon-bar {
+    background-color: #cccccc;
+}
+.navbar-custom .navbar-collapse,
+.navbar-custom .navbar-form {
+    border-color: #2f3436;
+}
+.navbar-custom .navbar-nav > .dropdown > a:hover .caret,
+.navbar-custom .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: #f5f7f7;
+    border-bottom-color: #f5f7f7;
+}
+.navbar-custom .navbar-nav > .open > a,
+.navbar-custom .navbar-nav > .open > a:hover,
+.navbar-custom .navbar-nav > .open > a:focus {
+    background-color: #313637;
+    color: #f5f7f7;
+}
+.navbar-custom .navbar-nav > .open > a .caret,
+.navbar-custom .navbar-nav > .open > a:hover .caret,
+.navbar-custom .navbar-nav > .open > a:focus .caret {
+    border-top-color: #f5f7f7;
+    border-bottom-color: #f5f7f7;
+}
+.navbar-custom .navbar-nav > .dropdown > a .caret {
+    border-top-color: #bac2c5;
+    border-bottom-color: #bac2c5;
+}
+@media (max-width: 767) {
+    .navbar-custom .navbar-nav .open .dropdown-menu > li > a {
+        color: #bac2c5;
+    }
+    .navbar-custom .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-custom .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #f5f7f7;
+        background-color: transparent;
+    }
+    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #f5f7f7;
+        background-color: #313637;
+    }
+    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+        color: #cccccc;
+        background-color: transparent;
+    }
+}
+.navbar-custom .navbar-link {
+    color: #bac2c5;
+}
+.navbar-custom .navbar-link:hover {
+    color: #f5f7f7;
+}
+
+/* Jumbotron */
+.jumbotron {
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    background: linear-gradient(to bottom, rgba(64, 71, 73, 0.5) 0%, rgba(32, 41, 63, 1) 100%);
+    height: 100vh;
+}
+.jumbobg {
+    background: url('http://znc.mane-frame.com/static/silverleaf.png') fixed no-repeat, url('../img/banner-1008444.jpg') no-repeat, grey;
+}
+@media (min-width: 768px) {
+    .jumbobg {
+        background: url('http://znc.mane-frame.com/static/silverleaf.png') fixed no-repeat bottom left, url('../img/banner-1008444.jpg') no-repeat, grey;
+        background-size: 30vmax, auto;
+    }
+}
+
+/* Text Definitions */
+.jumbo-sm-text {
+    font-family: 'Sansita One', cursive;
+    font-size: 3.9vmax
+}
+.jumbo-eyecatching-text {
+    font-family: 'Monofett', cursive;
+    font-size: 6.9vmax;
+    color: #e5aaff;
+}
+.small-text-heading {
+    font-family: 'Sansita One', cursive;
+    text-decoration: underline;
+    text-align: center;
+}
+.large-text-heading {
+    font-family: 'Sansita One', cursive;
+    text-decoration: underline;
+    text-align: left;
+    font-size: 100px;
+}
+.blog-title {
+    font-size: 50px;
+}
+.blog-timestamp {
+    font-size: 30px;
+}
+.blog-content {
+    font-size: 20px;
+}
+.heading-subtxt {
+    font-size: 40px;
+}
+
+/* Panel */
+.panel-default {
+    background-color: #20293F;
+    border-color: #50618C;
+}
+
+/* Container */
+.container {
+    padding: 60px;
+    color: #e6e6e6;
+}
+
+/* Music Player */
+footer {
+    position: fixed;
+    height: auto;
+    bottom: 0;
+    width: 100%;
+}
+.audiojs {
+    height: 22px;
+    background: #404040;
+    width: 100px;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444), color-stop(0.5, #555), color-stop(0.51, #444), color-stop(1, #444));
+    background-image: -moz-linear-gradient(center top, #444 0%, #555 50%, #444 51%, #444 100%);
+    -webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+    -o-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+}
+.audiojs .play-pause {
+    width: 100px;
+    height: 20px;
+    padding: 0px 8px 0px 0px;
+}
+.audiojs .played {
+    display: none;
+}
+.audiojs .duration {
+    display: none;
+}
+.audiojs .time {
+    display: none;
+}
+.audiojs p {
+    width: 25px;
+    height: 20px;
+    margin: -3px 0px 0px -1px;
+}
+.audiojs .scrubber {
+    background: transparent;
+    width: 310px;
+    height: 0px;
+    margin: 0px;
+}
+.audiojs .progress {
+    height: 10px;
+    width: 0px;
+    background: #ccc;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ccc), color-stop(0.5, #ddd), color-stop(0.51, #ccc), color-stop(1, #ccc));
+    background-image: -moz-linear-gradient(center top, #ccc 0%, #ddd 50%, #ccc 51%, #ccc 100%);
+}
+.audiojs .loaded {
+    height: 10px;
+    background: #000;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #222), color-stop(0.5, #333), color-stop(0.51, #222), color-stop(1, #222));
+    background-image: -moz-linear-gradient(center top, #222 0%, #333 50%, #222 51%, #222 100%);
+}
+.audiojs .time {
+    float: left;
+    height: 25px;
+    line-height: 25px;
+}
+.audiojs .error-message {
+    height: 24px;
+    line-height: 24px;
+}
+.track-details {
+    clear: both;
+    height: 20px;
+    width: 400px;
+    padding: 1px 6px;
+    background: #eee;
+    color: #222;
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 20px;
+    -webkit-box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.15);
+}
+.track-details:before {
+    content: '\266C ';
+}
+.track-details em {
+    font-style: normal;
+    color: #999;
+}
+
+/* Media */
+img.media-object {
+  width: 100px;
+}
+.media-heading {
+  font-size: 30px;
+}
+.media-team-position {
+  color: #a1a1a1;
+  font-size: 20px;
+}
