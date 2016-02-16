@@ -59,7 +59,7 @@ def contact():
 
 @app.route('/update_radio_subtxt', methods=['GET', 'OPTIONS'])
 @crossdomain(origin='*')
-def update_radio_subtxt2():
+def update_radio_subtxt():
     response = urllib2.urlopen('http://radio.mane-frame.com/status-json.xsl')
     xsl = response.read()
     mfr_json = json.loads(xsl)
