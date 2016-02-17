@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+
+		<title>Choose a Song</title>
+		<meta name="description" content="">
+	  	<meta name="author" content="">
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='requests/jquery-ui-1.8.13.slider.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='requests/jPaginator-min.js') }}"></script>
+
+
+		<style type="text/css" media="all">
+			@import url(http://fonts.googleapis.com/css?family=Droid+Serif:400italic&v2);
+			@import url({{ url_for('static', filename='requests/jPaginator.css') }});
+			@import url({{ url_for('static', filename='requests/custom.css') }});
+		</style>
+
+		<script type="text/javascript">
+		// Initial call
+		$(document).ready(function(){
+
+			$("#pagination").jPaginator({
+				nbPages:{{ paginations }},
+				marginPx:5,
+				length:8,
+				overBtnLeft:'#over_backward',
+				overBtnRight:'#over_forward',
+				maxBtnLeft:'#max_backward',
+				maxBtnRight:'#max_forward',
+				onPageClicked: function(a,num) {
+					$.get( "/getTable/" + num, function( data ) {
+	          $( "#page" ).html( data );
+	        });
+				}
+			});
+
+		});
+
+		</script>
+		<script>
+		function search() {
+			var query = document.getElementById('searchbox').value
+			$.get( "/searchTable/" + query, function( data ) {
+				$( "#page" ).html( data );
+				$( "#pagination" ).html( "" );
+				$('#searchbox').blur()
+			});
+		}
+		</script>
+
+	</head>
+
+	<body>
+	<div>
+		<div style="color: white;">
+		Search: <input type="text" id="searchbox" size="60" onKeydown="Javascript: if (event.keyCode==13) search('enter');">
+		<button type="button" onclick="search()">Submit</button>
+		<a href="../requests"><button type="button">Back to list view</button></a>
+	</div>
+	</div>
+		<div id="container">
+
+			<!--include a div which we'll use to illustrate jPaginator doing its job-->
+			<div id="page" style="color: white;"></div>
+
+			<div id="pagination">
+
+				<!-- optional left control buttons-->
+				<a class="control" id="max_backward"></a>
+
+				<a class="control" id="over_backward"></a>
+
+				<div class='paginator_p_wrap'>
+
+					<div class='paginator_p_bloc'>
+
+						<!--<div class='paginator_p'></div> // page number : dynamically added -->
+
+					</div>
+				</div>
+
+
+				<!-- optional right control buttons-->
+				<a class="control" id="over_forward"></a>
+
+				<a class="control" id="max_forward"></a>
+
+				<!-- slider -->
+				<div class='paginator_slider' class='ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all'>
+
+					<a class='ui-slider-handle ui-state-default ui-corner-all' href='#'></a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</body>
+
+</html>
