@@ -209,11 +209,11 @@ hr {
     height: 100vh;
 }
 .jumbobg {
-    background: url('http://znc.mane-frame.com/static/silverleaf.png') fixed no-repeat, url('../img/banner-1008444.jpg') no-repeat, grey;
+    background: url('../img/Silverleaf2.png') fixed no-repeat, url('../img/banner-1008444.jpg') no-repeat, grey;
 }
 @media (min-width: 768px) {
     .jumbobg {
-        background: url('http://znc.mane-frame.com/static/silverleaf.png') fixed no-repeat bottom left, url('../img/banner-1008444.jpg') no-repeat, grey;
+        background: url('../img/Silverleaf2.png') fixed no-repeat bottom left, url('../img/banner-1008444.jpg') no-repeat, grey;
         background-size: 30vmax, auto;
     }
 }
