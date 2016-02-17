@@ -29,8 +29,10 @@ This is the Mane Frame Radio's website. It is currently actively developed by th
 ## Installation Instructions
 1. Gather the required dependencies
 2. Download the zip tarball or clone the repository
-3. Locate any of the `.py` files within the folder and run them using python. For example: `python main.py`
-4. Open up a web browser and point to the ip address shown in the window
+3. Locate `SAMPLE mysql-login.json` and make a copy, removing the `SAMPLE` from the filename.
+4. Fill out the mysql details in `mysql-login.json` and save the file. This is for the requests system, and the app cannot run without it.
+5. Locate any of the `.py` files within the folder and run them using python. For example: `python main.py` (from mane-site)
+6. Open up a web browser and point to the ip address shown in the window
 
 ## Significant Files Breakdown
 ```
