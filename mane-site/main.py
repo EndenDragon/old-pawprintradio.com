@@ -17,6 +17,10 @@ import logging
 app = Flask(__name__)
 gitRevision = commands.getoutput("git rev-parse --short master")
 
+def file_get_contents(filename):
+    with open(os.path.dirname(os.path.realpath(__file__)) + "/" + filename) as f:
+        return f.read()
+
 def getMFRTumblr():
     response = urllib2.urlopen('http://maneframeradio.tumblr.com/api/read?type=post&start=0&num=10')
     html = response.read()
@@ -78,10 +82,6 @@ def update_radio_subtxt():
     return str(mfr_json["title"]) + " <em>" + str(mfr_json["listeners"]) + "</em>"
 
 #Begin Requests system
-def file_get_contents(filename):
-    with open(os.path.dirname(os.path.realpath(__file__)) + "/" + filename) as f:
-        return f.read()
-
 mysql_login = file_get_contents("mysql-login.json")
 mysql_login = json.loads(mysql_login)
 engine = create_engine('mysql://' + str(mysql_login["username"]) + ':' + str(mysql_login["password"]) + '@' + str(mysql_login["ip"]) + ':' + str(mysql_login["port"]) + '/' + str(mysql_login["database"]))
@@ -158,5 +158,6 @@ if __name__ == '__main__':
     logger = logging.getLogger('werkzeug')
     handler = logging.FileHandler('flask.log')
     logger.addHandler(handler)
-    app.debug = True
-    app.run(host= '0.0.0.0')
+    app_config = file_get_contents("config.json")
+    app_config = json.loads(app_config)
+    app.run(host=str(app_config["ip"]),port=int(float(str(app_config["port"]))),debug=app_config["debug"] in ["True","true"])
