@@ -19,7 +19,7 @@ This is the Mane Frame Radio's website. It is currently actively developed by th
 * python 2.7.9 +
 * Flask `pip install Flask`
 * Flask-SQLAlchemy `pip install Flask-SQLAlchemy`
-* MySQLdb `pip install MySQL-python`
+* MySQLdb `apt-get install python-mysqldb`
 
 ## Optional Dependencies
 * Adobe Photoshop CS6 ~or above (To beable to view the website sketches)
