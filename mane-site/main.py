@@ -12,6 +12,7 @@ import time
 import datetime
 import math
 import re
+import logging
 
 app = Flask(__name__)
 gitRevision = commands.getoutput("git rev-parse --short master")
@@ -144,11 +145,18 @@ def request_post():
             reqID = str(x["ID"]) + reqID
             reqTITLE = str(x["title"]) + reqTITLE
             reqARTIST = str(x["artist"]) + reqARTIST
+        t = connection.execute("""SELECT * FROM queuelist WHERE `songID` LIKE """ + str(reqID))
+        for x in t:
+            if str(x["songID"]) == reqID:
+                return render_template('requestErrorInQueue.html', reqID=reqSONGID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqUSERNAME=reqUSERNAME)
         connection.execute("""INSERT INTO `requests` (`songID`, `username`, `userIP`, `message`, `requested`) VALUES (""" + str(reqSONGID) + """, '""" + reqUSERNAME + """', '""" + reqIP + """', '""" + reqMSG + """', '""" + reqTIMESTAMP + """');""")
         return render_template('requestConfirmation.html', reqID=reqSONGID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqUSERNAME=reqUSERNAME)
-    return "GET IS NOT SUPPORTED ON /request-post"
+    return "GET IS NOT SUPPORTED ON /request-post", 403
 #End Requests System
 
 if __name__ == '__main__':
+    logger = logging.getLogger('werkzeug')
+    handler = logging.FileHandler('flask.log')
+    logger.addHandler(handler)
     app.debug = True
     app.run(host= '0.0.0.0')
