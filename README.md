@@ -36,60 +36,14 @@ This is the Mane Frame Radio's website. It is currently actively developed by th
 7. Open up a web browser and point to the ip address shown in the window
 
 ## Significant Files Breakdown
-```
-* mane-frame.com/
-|    * mane-site/
-|    |    * main.py
-|    |    * xml2dict.py
-|    |    * crossdomainfuncs.py
-|    |    * static/
-|    |    |    * css/
-|    |    |    |    * custom.css
-|    |    |    * templates/
-|    |    |    |    * about.html
-|    |    |    |    * blog.html
-|    |    |    |    * contact.html
-|    |    |    |    * donate.html
-|    |    |    |    * events.html
-|    |    |    |    * footer.html
-|    |    |    |    * header.html
-|    |    |    |    * index.html
-|    |    |    |    * menu.html
-|    |    |    |    * player.html
-|    |    |    |    * sidebar.html
-|    |    |    |    * team.html
-|    * mane-site-static/
-|    |    * css/
-|    |    |    * custom.css
-|    |    * img/
-|    |    |    * staff/
-|    |    * index.html
-|    |    * about.html
-|    |    * team.html
-|    |    * blog.html
-|    |    * donate.html
-|    |    * events.html
-|    * comingsoon/
-|    |    * templates/
-|    |    |    * index.html
-|    |    * index.py
-|    |    |    * static/
-|    |    |    |   * silverleaf.png
-|    * staff/
-|    |    * list & bio.txt
-|    * Site Drawings/
-|    |    * mane-frame.psd
-|    * test/
-|    |    * ajax-pageload/
-|    |    |    * mfr-ajax-pageload-demo.py
-|    |    * menubar/
-|    |    |    * menubar.html
-|    |    * OAuth/
-|    |    |    * oauth.py
-|    |    * player/
-|    |    |    * mfr-player-demo.py
-|    * mfr-imgs/
-```
+* mane-site/
+    * main.py - Main python script to launch the main website
+    * config.json - Configuration file for ip, port, and debug mode
+    * mysql-login.json - Configuration file for mysql requests system to interact with radiodj
+* comingsoon/
+    * index.py - Python script for the coming soon site
+* test/ - different tests used on the website
+
 ## Contributers
 **To shed some light into who helped me along the way!**
 * Dusk
