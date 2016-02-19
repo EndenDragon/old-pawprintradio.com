@@ -15,6 +15,7 @@ import re
 import logging
 
 app = Flask(__name__)
+os.environ['TZ'] = 'America/Los_Angeles'
 gitRevision = commands.getoutput("git rev-parse --short master")
 
 def file_get_contents(filename):
@@ -145,10 +146,17 @@ def request_post():
             reqID = str(x["ID"]) + reqID
             reqTITLE = str(x["title"]) + reqTITLE
             reqARTIST = str(x["artist"]) + reqARTIST
+        date = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
+        t = connection.execute('''SELECT COUNT(*) FROM requests WHERE `requested` LIKE "%%''' + date + '''%%" AND `userIP` LIKE "''' + reqIP + '''"''')
+        m = ""
+        for z in t:
+            m = str(z[0]) + m
+        if int(float(m)) >= 10:
+            return render_template('requestErrorInQueue.html', reqID=reqSONGID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqUSERNAME=reqUSERNAME, errorMESSAGE="you had reached the maximum daily limit (10) of requested songs. Give others a chance to shine too! Thank you for your understanding and check back tomorrow to beable to request more songs!")
         t = connection.execute("""SELECT * FROM queuelist WHERE `songID` LIKE """ + str(reqID))
         for x in t:
             if str(x["songID"]) == reqID:
-                return render_template('requestErrorInQueue.html', reqID=reqSONGID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqUSERNAME=reqUSERNAME)
+                return render_template('requestErrorInQueue.html', reqID=reqSONGID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqUSERNAME=reqUSERNAME, errorMESSAGE="the song you had requested is already in queue. Don't worry, as your song might be after within the next few songs.")
         connection.execute("""INSERT INTO `requests` (`songID`, `username`, `userIP`, `message`, `requested`) VALUES (""" + str(reqSONGID) + """, '""" + reqUSERNAME + """', '""" + reqIP + """', '""" + reqMSG + """', '""" + reqTIMESTAMP + """');""")
         return render_template('requestConfirmation.html', reqID=reqSONGID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqUSERNAME=reqUSERNAME)
     return "GET IS NOT SUPPORTED ON /request-post", 403
