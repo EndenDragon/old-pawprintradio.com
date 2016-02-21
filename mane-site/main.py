@@ -17,6 +17,9 @@ import logging
 app = Flask(__name__)
 os.environ['TZ'] = 'America/Los_Angeles'
 gitRevision = commands.getoutput("git rev-parse --short master")
+logger = logging.getLogger('werkzeug')
+handler = logging.FileHandler('flask.log')
+logger.addHandler(handler)
 
 def file_get_contents(filename):
     with open(os.path.dirname(os.path.realpath(__file__)) + "/" + filename) as f:
@@ -163,9 +166,6 @@ def request_post():
 #End Requests System
 
 if __name__ == '__main__':
-    logger = logging.getLogger('werkzeug')
-    handler = logging.FileHandler('flask.log')
-    logger.addHandler(handler)
     app_config = file_get_contents("config.json")
     app_config = json.loads(app_config)
     app.run(host=str(app_config["ip"]),port=int(float(str(app_config["port"]))),debug=app_config["debug"] in ["True","true"])
