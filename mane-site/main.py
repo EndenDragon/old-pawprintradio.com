@@ -138,7 +138,7 @@ def request_post():
         reqIP = str(remote_addr)
         reqMSG = MySQLdb.escape_string(str(request.form['reqMSG'])).replace("%", "")
         reqTIMESTAMP = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
-        t = connection.execute("SELECT * FROM songs WHERE `ID` LIKE  " + str(int(songid)))
+        t = connection.execute("SELECT * FROM songs WHERE `ID` LIKE  " + str(int(reqSONGID)))
         reqID = ""
         reqTITLE = ""
         reqARTIST = ""
