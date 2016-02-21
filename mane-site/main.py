@@ -123,7 +123,7 @@ def requestForm(songid):
         reqID = str(x["ID"]) + reqID
         reqTITLE = str(x["title"]) + reqTITLE
         reqARTIST = str(x["artist"]) + reqARTIST
-    return render_template('requestForm.html', reqID=reqID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqIDfield=reqID)
+    return render_template('requestForm.html', reqID=reqID, reqTITLE=reqTITLE, reqARTIST=reqARTIST)
 
 @app.route("/request-post", methods=['POST', 'GET'])
 def request_post():
