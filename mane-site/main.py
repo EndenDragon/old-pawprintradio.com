@@ -115,7 +115,7 @@ def searchTable(query):
 @app.route("/reqForm/<songid>")
 def requestForm(songid):
     songid = MySQLdb.escape_string(songid)
-    t = connection.execute("SELECT * FROM songs LIMIT 1 OFFSET " + str(int(songid) - 1))
+    t = connection.execute("SELECT * FROM songs WHERE `ID` LIKE  " + str(int(songid)))
     reqID = ""
     reqTITLE = ""
     reqARTIST = ""
@@ -138,7 +138,7 @@ def request_post():
         reqIP = str(remote_addr)
         reqMSG = MySQLdb.escape_string(str(request.form['reqMSG'])).replace("%", "")
         reqTIMESTAMP = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
-        t = connection.execute("SELECT * FROM songs LIMIT 1 OFFSET " + str(int(reqSONGID) - 1))
+        t = connection.execute("SELECT * FROM songs WHERE `ID` LIKE  " + str(int(songid)))
         reqID = ""
         reqTITLE = ""
         reqARTIST = ""
