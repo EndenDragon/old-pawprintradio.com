@@ -36,7 +36,10 @@ def getMFRTumblr():
 def index():
     t = getMFRTumblr()
     t = t[0]
-    postTitle = t["regular-title"]
+    try:
+        postTitle = t["regular-title"]
+    except:
+        postTitle = " "
     postContent = t["regular-body"]
     postURL = t["url"]
     postTimestamp = t["date"]
@@ -51,7 +54,11 @@ def blog():
     t = getMFRTumblr()
     posts = []
     for x in t:
-        a = {'title': x["regular-title"], 'url': x["url"], 'timestamp': x["date"], 'content': x["regular-body"]}
+        try:
+            regTitle = x["regular-title"]
+        except:
+            regTitle = " "
+        a = {'title': regTitle, 'url': x["url"], 'timestamp': x["date"], 'content': x["regular-body"]}
         posts.append(a)
     return render_template('header.html', title="Blog") + render_template('menu.html', activeBlog="active") + render_template('blog.html', posts=posts) + render_template('sidebar.html', revision=gitRevision) + render_template('player.html') + render_template('footer.html')
 
