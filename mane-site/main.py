@@ -13,6 +13,7 @@ import datetime
 import math
 import re
 import logging
+import HTMLParser
 
 app = Flask(__name__)
 os.environ['TZ'] = 'America/Los_Angeles'
@@ -23,26 +24,72 @@ def file_get_contents(filename):
         return f.read()
 
 def getMFRTumblr():
-    response = urllib2.urlopen('http://maneframeradio.tumblr.com/api/read?type=post&start=0&num=10')
+    response = urllib2.urlopen('http://maneframeradio.tumblr.com/api/read?start=0&num=10')
     html = response.read()
     root = ElementTree.XML(html)
     xmldict = XmlDictConfig(root)
     xmldict = xmldict["posts"]
-    x = xmldict["post"]
-    return x
-
+    t = xmldict["post"]
+    posts = []
+    for x in t:
+        if x['type'] == "regular":
+            try:
+                regTitle = x["regular-title"]
+            except:
+                regTitle = "Post"
+            regBody = x["regular-body"]
+        if x['type'] == "photo":
+            a = ""
+            try:
+                for m in x['photoset']['photo']:
+                    a = '<img src="' + m[1] + '">' + a
+            except:
+                img = html[html.find('<photo-url max-width="500">', html.find(x['id']))+27:html.find('</photo-url>', html.find('<photo-url max-width="500">', html.find(x['id'])))]
+                a = '<img src="' + img + '">'
+            try:
+                a = a + x["photo-caption"]
+            except:
+                pass
+            regTitle = "Photo"
+            regBody = a
+        if x['type'] == "link":
+            link_text = x['link-text']
+            link_url = x['link-url']
+            link_desc = x['link-description']
+            regTitle = "Link"
+            regBody = '<a href="' + link_url + '">' + link_text + "</a> <small>(" + link_url + ")</small>" + link_desc
+        if x['type'] == "quote":
+            regTitle = "Quote"
+            quote_txt = x['quote-text']
+            quote_src = x['quote-source']
+            regBody = '<blockquote><p>' + quote_txt + '</p><br><small style="color: white;">' + quote_src + '</small></blockquote>'
+        if x['type'] == "conversation":
+            regTitle = x['conversation-title']
+            regBody = x['conversation-text']
+        if x['type'] == "audio":
+            regTitle = x['id3-title']
+            audioContent = x['audio-embed']
+            caption = x['audio-caption']
+            regBody = audioContent + caption
+        if x['type'] == "video":
+            video_player = html[html.find('<video-player max-width="500">', html.find(x['id']))+31:html.find('</video-player>', html.find('<video-player max-width="500">', html.find(x['id'])))]
+            video_player = HTMLParser.HTMLParser().unescape(video_player)
+            video_player = video_player[:6] + " controls" + video_player[7:]
+            regTitle = "Video"
+            regBody = video_player + x['video-caption']
+        a = {'title': regTitle, 'url': x["url"], 'timestamp': x["date"], 'content': regBody}
+        posts.append(a)
+        regTitle = "ERROR"
+        regBody = "ERROR"
+    return posts
 
 @app.route('/')
 def index():
-    t = getMFRTumblr()
-    t = t[0]
-    try:
-        postTitle = t["regular-title"]
-    except:
-        postTitle = " "
-    postContent = t["regular-body"]
+    t = getMFRTumblr()[0]
+    postContent = t["content"]
     postURL = t["url"]
-    postTimestamp = t["date"]
+    postTimestamp = t["timestamp"]
+    postTitle = t["title"]
     return render_template('header.html', title="Welcome") + render_template('menu.html', animatedMenubar="animated fadeInDown") + render_template('index.html', postTitle = postTitle, postContent = postContent, postURL = postURL, postTimestamp = postTimestamp) + render_template('sidebar.html', revision=gitRevision) + render_template('player.html') + render_template('footer.html')
 
 @app.route('/about')
@@ -51,15 +98,7 @@ def about():
 
 @app.route('/blog')
 def blog():
-    t = getMFRTumblr()
-    posts = []
-    for x in t:
-        try:
-            regTitle = x["regular-title"]
-        except:
-            regTitle = " "
-        a = {'title': regTitle, 'url': x["url"], 'timestamp': x["date"], 'content': x["regular-body"]}
-        posts.append(a)
+    posts = getMFRTumblr()
     return render_template('header.html', title="Blog") + render_template('menu.html', activeBlog="active") + render_template('blog.html', posts=posts) + render_template('sidebar.html', revision=gitRevision) + render_template('player.html') + render_template('footer.html')
 
 @app.route('/events')
