@@ -1,0 +1,2 @@
+job1:
+    script: "cd mane-site;python main.py"
