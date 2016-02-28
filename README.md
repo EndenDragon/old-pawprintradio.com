@@ -55,4 +55,4 @@ This is the Mane Frame Radio's website. It is currently actively developed by th
 * neonstrobelights
 
 ## Copyright
-Everything is All Rights Reserved by Mane Frame Radio unless specified.
+Everything is All Rights Reserved by Mane Frame Radio unless specified. 2016
