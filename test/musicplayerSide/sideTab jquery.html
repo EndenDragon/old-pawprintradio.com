@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>PowerTip Examples</title>
+	<style type="text/css">
+		#mouseon-examples div { background-color: #EEE; text-align: center; width: 400px; padding: 40px; }
+    #floating_tab{
+         position: fixed;
+         right: 0;
+         top: 400px;
+         display: block;
+         width: 50px;
+         height: 125px;
+         color: white;
+         font-size: 600%;
+         text-decoration:none;
+         overflow: hidden;
+         background-color: #cccccc;
+    }
+    #popoverContent {display: none;}
+	</style>
+	<!-- Include jQuery and PowerTip -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
+	<!-- begin-scripts -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.2.0/jquery.powertip.min.js"></script>
+	<!-- end-scripts -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.2.0/css/jquery.powertip-blue.min.css" />
+</head>
+<body>
+
+	<a id="floating_tab" href="#">&#9836;</a>
+
+	<!-- Mouse on to tooltip example -->
+	<div id="mouseon-examples">
+		<h2>Mouse on to tooltip example</h2>
+		<div>
+			The PowerTip for this box will appear on the right and you will be able to interact with its content.
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			// mouse-on example
+			var mouseOnDiv = $('#floating_tab');
+			var tipContent = $(
+				'<p><b>Here is some content</b></p>' +
+				'<p><a href="http://stevenbenner.com/">Maybe a link</a></p>'
+			);
+			mouseOnDiv.data('powertipjq', tipContent);
+			mouseOnDiv.powerTip({
+				placement: 'w',
+				mouseOnToPopup: true
+			});
+		});
+	</script>
+
+  <!-- API Examples -->
+<div id="api-examples">
+  <h2>API examples</h2>
+  <input id="api-open" type="button" value="Show mouse-on tooltip" />
+  <input id="api-close" type="button" value="Close any open tooltips" />
+</div>
+<script type="text/javascript">
+  $(function() {
+    // api examples
+    $('#api-open').on('click', function() {
+      $.powerTip.show($('#floating_tab'));
+    });
+    $('#api-close').on('click', function() {
+      $.powerTip.hide();
+    });
+  });
+</script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</body>
+</html>
