@@ -1,5 +1,6 @@
 <div style="height: 20px; color: #030C22; visibility: hidden;"><br>.<br>.<br>.</div>
     </div>
+<!-- Old Left Bottom corner player (If anyone wants to have it on the left bottom, ping @EndenDragon and I will consider!)
 <footer>
   <a class="btn btn-success btn-xs" data-featherlight="#fl2" data-featherlight-variant="fixwidth">Request a Song</a>
   <audio src="http://radio.mane-frame.com:8000/stream-128.mp3" preload="auto"></audio>
@@ -12,3 +13,32 @@
     </iframe>
   </div>
 </footer>
+-->
+<div id="floating_tab" data-toggle="modal" data-target="#playerModal">&#9836;</div>
+<div class="modal fade" id="playerModal" tabindex="-1" role="dialog" aria-labelledby="playerModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">&#9836; &#9836; Mane Frame Radio - Web Player &#9836; &#9836;</h4>
+      </div>
+      <div class="modal-body">
+        <a class="btn btn-success btn-xs" data-featherlight="#fl2" data-featherlight-variant="fixwidth">Request a Song</a>
+        <audio src="http://radio.mane-frame.com:8000/stream-128.mp3" preload="auto"></audio>
+        <div class="track-details" id="update_radio_subtxt">
+          <em>Attempting to load Icecast metadata...</em>
+        </div>
+        <small class="pull-right">Note: Navigating throughout the website will not stop the music, if playing!</small>
+        <br>
+        <div class="lightbox" id="fl2">
+          <iframe src="/requests" style="height: 80vh; width: 100%">
+            <p>Your browser does not support iframes.</p>
+          </iframe>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
