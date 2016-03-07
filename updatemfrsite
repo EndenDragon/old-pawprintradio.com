@@ -1,0 +1,13 @@
+#!/bin/bash
+# Insert the file in the /usr/bin folder and type “updatemfrsite”,
+# To run the script of updating the website from the git
+
+echo updatemfrsite: Updating MFR Website mane-frame.com
+cd /usr/share/nginx/html/mane-frame.com/
+echo updatemfrsite: Stopping gUnicorn process
+sudo service gunicorn stop
+echo updatemfrsite: Pulling from the git git.mane-frame.com
+git pull
+echo updatemfrsite: Starting gunicorn process...
+sudo service gunicorn start
+echo updatemfrsite: Successfully updated the MFR website!
