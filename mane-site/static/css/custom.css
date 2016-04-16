@@ -257,6 +257,31 @@ hr {
     background-color: #20293F;
     border-color: #50618C;
 }
+div.panel-default>.panel-heading {
+  background-color: #344265;
+  color: white;
+  border-color: #A9B0B3;
+}
+.img-partner {
+  height: 200px;
+}
+.partner-desc {
+  font-size: 30px;
+  text-align: center;
+}
+@media (min-width: 1820px) {
+  .partner-desc {
+    font-size: 50px;
+    text-align: center;
+  }
+}
+
+.well {
+  background-color: #181E2D;
+  border: #50618C;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 /* Container */
 .container {
