@@ -109,9 +109,9 @@ def events():
 def team():
     return render_template('header.html', title="Team") + render_template('menu.html', activeTeam="active") + render_template('team.html') + render_template('sidebar.html', revision=gitRevision) + render_template('player.html') + render_template('footer.html')
 
-@app.route('/donate')
-def donate():
-    return render_template('header.html', title="Donate") + render_template('menu.html', activeDonate="active") + render_template('donate.html') + render_template('sidebar.html', revision=gitRevision) + render_template('player.html') + render_template('footer.html')
+@app.route('/partners')
+def partners():
+    return render_template('header.html', title="Partners") + render_template('menu.html', activePartners="active") + render_template('partners.html') + render_template('sidebar.html', revision=gitRevision) + render_template('player.html') + render_template('footer.html')
 
 @app.route('/contact')
 def contact():
