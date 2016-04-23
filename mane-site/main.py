@@ -23,6 +23,11 @@ def file_get_contents(filename):
     with open(os.path.dirname(os.path.realpath(__file__)) + "/" + filename) as f:
         return f.read()
 
+def strip_non_ascii(string):
+    ''' Returns the string without non ASCII characters'''
+    stripped = (c for c in string if 0 < ord(c) < 127)
+    return ''.join(stripped)
+
 def getMFRTumblr():
     response = urllib2.urlopen('http://maneframeradio.tumblr.com/api/read?start=0&num=10')
     html = response.read()
@@ -126,7 +131,7 @@ def update_radio_subtxt():
     mfr_json = mfr_json["icestats"]["source"]
     mfr_json.pop()
     mfr_json = mfr_json.pop()
-    return str(mfr_json["title"]) + " <em>" + str(mfr_json["listeners"]) + "</em>"
+    return strip_non_ascii(str(mfr_json["title"])) + " <em>" + str(mfr_json["listeners"]) + "</em>"
 
 #Begin Requests system
 mysql_login = file_get_contents("mysql-login.json")
@@ -167,8 +172,8 @@ def requestForm(songid):
     reqARTIST = ""
     for x in t:
         reqID = str(x["ID"]) + reqID
-        reqTITLE = str(x["title"]) + reqTITLE
-        reqARTIST = str(x["artist"]) + reqARTIST
+        reqTITLE = strip_non_ascii(str(x["title"])) + reqTITLE
+        reqARTIST = strip_non_ascii(str(x["artist"])) + reqARTIST
     return render_template('requestForm.html', reqID=reqID, reqTITLE=reqTITLE, reqARTIST=reqARTIST)
 
 @app.route("/request-post", methods=['POST', 'GET'])
@@ -190,8 +195,8 @@ def request_post():
         reqARTIST = ""
         for x in t:
             reqID = str(x["ID"]) + reqID
-            reqTITLE = str(x["title"]) + reqTITLE
-            reqARTIST = str(x["artist"]) + reqARTIST
+            reqTITLE = strip_non_ascii(str(x["title"])) + reqTITLE
+            reqARTIST = strip_non_ascii(str(x["artist"])) + reqARTIST
         date = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
         t = connection.execute('''SELECT COUNT(*) FROM requests WHERE `requested` LIKE "%%''' + date + '''%%" AND `userIP` LIKE "''' + reqIP + '''"''')
         m = ""
