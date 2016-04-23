@@ -14,13 +14,11 @@
     <!-- Featherlight -->
     <script src="http://cdn.rawgit.com/noelboss/featherlight/1.3.5/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
 
-    <!-- Enable Audio js -->
-    <script>
-      var a = audiojs;
-      a.events.ready(function() {
-        var a1 = a.createAll();
-      });
-    </script>
+    <!-- Soundmanager 2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/soundmanager2/2.97a.20150601/script/soundmanager2-nodebug-jsmin.js"></script>
+
+    <!-- Bootstrap Slider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.0/bootstrap-slider.min.js"></script>
 
     <!-- Updates the player text -->
     <script>
@@ -87,6 +85,79 @@
         }
       });
     });
+    </script>
+
+    <!-- Soundmanager 2 -->
+    <script>
+      document.getElementById("radioBTN_PlayPause").disabled = false;
+      radioVolume = 80;
+      radioIsPlaying = false;
+      function constructPlayer() {
+        soundManager.setup({
+          url: 'https://cdnjs.cloudflare.com/ajax/libs/soundmanager2/2.97a.20150601/swf/',
+          flashVersion: 9, // optional: shiny features (default = 8)
+          // optional: ignore Flash where possible, use 100% HTML5 mode
+          preferFlash: false,
+          onready: function() {
+            // Ready to use; soundManager.createSound() etc. can now be called.
+            var radioPlayer = soundManager.createSound({
+              id: 'radioPlayer',
+              url: 'http://radio.mane-frame.com/stream-128.mp3',
+              //autoLoad: true,
+              autoPlay: false,
+              volume: radioVolume,
+              onload: function() {
+                console.log("Soundmanager 2 loaded & the radio is now able to be played!");
+                document.getElementById("radioBTN_PlayPause").disabled = false;
+                document.getElementById("radioBTN_PlayPause_fa").className = "fa fa-pause";
+                $('#radioBTN_Volume').slider({
+                  formatter: function(vol) {
+                    volumeRadio(vol)
+                    return null
+                  }
+                });
+              },
+              onplay: function() {
+              },
+            });
+          }
+        });
+      }
+      function BTNPlayPause() {
+        if (radioIsPlaying) {
+          radioIsPlaying = false;
+          document.getElementById("radioBTN_PlayPause_fa").className = "fa fa-play";
+          stopRadio();
+        } else {
+          radioIsPlaying = true;
+          document.getElementById("radioBTN_PlayPause").disabled = true;
+          document.getElementById("radioBTN_PlayPause_fa").className = "fa fa-refresh fa-spin";
+          playRadio();
+        }
+      }
+      function playRadio() {
+        var radioPlayer = soundManager.getSoundById('radioPlayer');
+        radioPlayer.play({
+          volume: radioVolume,
+        });
+      }
+      function stopRadio() {
+        var radioPlayer = soundManager.getSoundById('radioPlayer');
+        radioPlayer.destruct();
+        constructPlayer();
+      }
+      function volumeRadio(vol) {
+        var radioPlayer = soundManager.getSoundById('radioPlayer');
+        radioPlayer.setVolume(vol);
+        radioVolume = vol;
+      }
+      $('#radioBTN_Volume').slider({
+        formatter: function(vol) {
+          radioVolume = vol;
+          return null
+        }
+      });
+      constructPlayer();
     </script>
 
     <!-- Google Analytics -->

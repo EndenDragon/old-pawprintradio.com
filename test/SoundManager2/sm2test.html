@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.0/css/bootstrap-slider.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/soundmanager2/2.97a.20150601/script/soundmanager2-nodebug-jsmin.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.0/bootstrap-slider.min.js"></script>
+</head>
+<body>
+  <br><br><br><br>
+  <button type="button" class="btn btn-primary btn-lg" id="radioBTN_PlayPause" onclick="BTNPlayPause();"><i class="fa fa-play" aria-hidden="true" id="radioBTN_PlayPause_fa"></i></button>&nbsp;&nbsp;&nbsp;
+  <input id="radioBTN_Volume" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="80"/>
+
+  <script>
+  document.getElementById("radioBTN_PlayPause").disabled = false;
+  radioVolume = 80;
+  radioIsPlaying = false;
+  function constructPlayer() {
+    soundManager.setup({
+      url: 'https://cdnjs.cloudflare.com/ajax/libs/soundmanager2/2.97a.20150601/swf/',
+      flashVersion: 9, // optional: shiny features (default = 8)
+      // optional: ignore Flash where possible, use 100% HTML5 mode
+      preferFlash: false,
+      onready: function() {
+        // Ready to use; soundManager.createSound() etc. can now be called.
+        var radioPlayer = soundManager.createSound({
+          id: 'radioPlayer',
+          url: 'http://radio.mane-frame.com/stream-128.mp3',
+          //autoLoad: true,
+          autoPlay: false,
+          volume: radioVolume,
+          onload: function() {
+            console.log("Soundmanager 2 loaded & the radio is now able to be played!");
+            document.getElementById("radioBTN_PlayPause").disabled = false;
+            document.getElementById("radioBTN_PlayPause_fa").className = "fa fa-pause";
+            $('#radioBTN_Volume').slider({
+              formatter: function(vol) {
+                volumeRadio(vol)
+                return 'Volume: ' + vol;
+              }
+            });
+          },
+          onplay: function() {
+          },
+        });
+      }
+    });
+  }
+  function BTNPlayPause() {
+    if (radioIsPlaying) {
+      radioIsPlaying = false;
+      document.getElementById("radioBTN_PlayPause_fa").className = "fa fa-play";
+      stopRadio();
+    } else {
+      radioIsPlaying = true;
+      document.getElementById("radioBTN_PlayPause").disabled = true;
+      document.getElementById("radioBTN_PlayPause_fa").className = "fa fa-refresh fa-spin";
+      playRadio();
+    }
+  }
+  function playRadio() {
+    var radioPlayer = soundManager.getSoundById('radioPlayer');
+    radioPlayer.play({
+      volume: radioVolume,
+    });
+  }
+  function stopRadio() {
+    var radioPlayer = soundManager.getSoundById('radioPlayer');
+    radioPlayer.destruct();
+    constructPlayer();
+  }
+  function volumeRadio(vol) {
+    var radioPlayer = soundManager.getSoundById('radioPlayer');
+    radioPlayer.setVolume(vol);
+    radioVolume = vol;
+  }
+  $('#radioBTN_Volume').slider({
+    formatter: function(vol) {
+      radioVolume = vol;
+      return 'Volume: ' + vol;
+    }
+  });
+  constructPlayer();
+  </script>
+</body>
+</html>
