@@ -213,6 +213,22 @@ def request_post():
     return "GET IS NOT SUPPORTED ON /request-post", 403
 #End Requests System
 
+#For the bot
+@app.route("/bot-request-post", methods=['POST'])
+def bot_request_post():
+    reqSONGID = MySQLdb.escape_string(str(request.form['reqSONGID']))
+    reqUSERNAME = MySQLdb.escape_string(str(request.form['reqUSERNAME'])).replace("%", "")
+    reqIP = "DISCORDBOT"
+    reqMSG = ""
+    reqTIMESTAMP = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+    date = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
+    t = connection.execute("""SELECT * FROM queuelist WHERE `songID` LIKE """ + str(reqSONGID))
+    for x in t:
+        if str(x["songID"]) == reqSONGID:
+            return "The song you had requested is already in queue. Don't worry, as your song might be after within the next few songs."
+    connection.execute("""INSERT INTO `requests` (`songID`, `username`, `userIP`, `message`, `requested`) VALUES (""" + str(reqSONGID) + """, '""" + reqUSERNAME + """', '""" + reqIP + """', '""" + reqMSG + """', '""" + reqTIMESTAMP + """');""")
+    return "1"
+
 if __name__ == '__main__':
     logger = logging.getLogger('werkzeug')
     handler = logging.FileHandler('flask.log')
