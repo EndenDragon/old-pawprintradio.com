@@ -218,7 +218,7 @@ def request_post():
 def bot_request_post():
     reqSONGID = MySQLdb.escape_string(str(request.form['reqSONGID']))
     reqUSERNAME = MySQLdb.escape_string(str(request.form['reqUSERNAME'])).replace("%", "")
-    reqIP = "DISCORDBOT"
+    reqIP = "BOTREQUEST"
     reqMSG = ""
     reqTIMESTAMP = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
     date = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
