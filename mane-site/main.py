@@ -135,7 +135,7 @@ def update_radio_subtxt():
 
 @app.route('/json/update_radio_subtxt', methods=['GET', 'OPTIONS'])
 @crossdomain(origin='*')
-def update_radio_subtxt():
+def json_update_radio_subtxt():
     response = urllib2.urlopen('http://radio.pawprintradio.com/status-json.xsl')
     xsl = response.read()
     mfr_json = json.loads(xsl)
@@ -259,7 +259,7 @@ def bot_request_post():
     return "1"
 
 @app.route("/json/bot-request-post", methods=['POST'])
-def bot_request_post():
+def json_bot_request_post():
     reqSONGID = MySQLdb.escape_string(str(request.form['reqSONGID']))
     reqUSERNAME = MySQLdb.escape_string(str(request.form['reqUSERNAME'])).replace("%", "")
     reqIP = "BOTREQUEST"
