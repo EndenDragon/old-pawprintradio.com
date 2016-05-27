@@ -174,6 +174,14 @@ def json_getTable(index):
         m = m + str(json.dumps({"ID": str(x["ID"]), "artist": str(x["artist"]), "title": str(x["title"])}))
     return m
 
+@app.route("/json/tablePageCount")
+def json_pagesCount():
+    a = ""
+    for row in connection.execute("SELECT COUNT(*) FROM songs"):
+        a = str(row[0]) + a
+    a = str(json.dumps({"pagesCount": math.ceil((float(str(a))/25))}))
+    return a
+
 @app.route("/searchTable/<query>")
 def searchTable(query):
     query = MySQLdb.escape_string(query)
