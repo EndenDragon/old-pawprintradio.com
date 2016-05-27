@@ -133,6 +133,17 @@ def update_radio_subtxt():
     mfr_json = mfr_json.pop()
     return strip_non_ascii(str(mfr_json["title"])) + " <em>" + str(mfr_json["listeners"]) + "</em>"
 
+@app.route('/json/update_radio_subtxt', methods=['GET', 'OPTIONS'])
+@crossdomain(origin='*')
+def update_radio_subtxt():
+    response = urllib2.urlopen('http://radio.pawprintradio.com/status-json.xsl')
+    xsl = response.read()
+    mfr_json = json.loads(xsl)
+    mfr_json = mfr_json["icestats"]["source"]
+    mfr_json.pop()
+    mfr_json = mfr_json.pop()
+    return json.dumps({"title": str(mfr_json["title"], "listeners": str(mfr_json["listeners"]))})
+
 #Begin Requests system
 mysql_login = file_get_contents("mysql-login.json")
 mysql_login = json.loads(mysql_login)
@@ -154,6 +165,15 @@ def getTable(index):
         m = m + "<tr>" + "<td>" + str(x["ID"]) + "</td>" + "<td>" + str(x["artist"]) + "</td>" + "<td>" + str(x["title"]) + "</td>" + '''<td><a href="reqForm/''' + str(x["ID"]) + '''"><button type="button">Request Song</button></a></td>''' + "</tr>"
     return '<table border="1" style="width:100%"><tr style="font-size: 30px;"><td>ID</td><td>Artist</td><td>Title</td><td>Action</td></tr><br>' + m + "</table>"
 
+@app.route("/json/getTable/<index>")
+def json_getTable(index):
+    index = MySQLdb.escape_string(index)
+    t = connection.execute("SELECT * FROM songs ORDER BY `artist` LIMIT " + str((int(index) - 1) * 25) + ", 25")
+    m = ""
+    for x in t:
+        m = m + str(json.dumps({"ID": str(x["ID"]), "artist": str(x["artist"]), "title": str(x["title"])}))
+    return m
+
 @app.route("/searchTable/<query>")
 def searchTable(query):
     query = MySQLdb.escape_string(query)
@@ -162,6 +182,15 @@ def searchTable(query):
     for x in t:
         m = m + "<tr>" + "<td>" + str(x["ID"]) + "</td>" + "<td>" + str(x["artist"]) + "</td>" + "<td>" + str(x["title"]) + "</td>" + '''<td><a href="reqForm/''' + str(x["ID"]) + '''"><button type="button">Request Song</button></a></td>''' + "</tr>"
     return '<table border="1" style="width:100%"><tr style="font-size: 30px;"><td>ID</td><td>Artist</td><td>Title</td><td>Action</td></tr><br>' + m + "</table>"
+
+@app.route("/json/searchTable/<query>")
+def json_searchTable(query):
+    query = MySQLdb.escape_string(query)
+    t = connection.execute("SELECT * FROM songs WHERE `artist` COLLATE UTF8_GENERAL_CI LIKE '%%" + str(query) + "%%' OR `title` COLLATE UTF8_GENERAL_CI LIKE '%%" + str(query) + "%%'")
+    m = ""
+    for x in t:
+        m = m + str(json.dumps({"ID": str(x["ID"]), "artist": str(x["artist"]), "title": str(x["title"])}))
+    return m
 
 @app.route("/reqForm/<songid>")
 def requestForm(songid):
@@ -228,6 +257,21 @@ def bot_request_post():
             return "The song you had requested is already in queue. Don't worry, as your song might be after within the next few songs."
     connection.execute("""INSERT INTO `requests` (`songID`, `username`, `userIP`, `message`, `requested`) VALUES (""" + str(reqSONGID) + """, '""" + reqUSERNAME + """', '""" + reqIP + """', '""" + reqMSG + """', '""" + reqTIMESTAMP + """');""")
     return "1"
+
+@app.route("/json/bot-request-post", methods=['POST'])
+def bot_request_post():
+    reqSONGID = MySQLdb.escape_string(str(request.form['reqSONGID']))
+    reqUSERNAME = MySQLdb.escape_string(str(request.form['reqUSERNAME'])).replace("%", "")
+    reqIP = "BOTREQUEST"
+    reqMSG = ""
+    reqTIMESTAMP = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+    date = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
+    t = connection.execute("""SELECT * FROM queuelist WHERE `songID` LIKE """ + str(reqSONGID))
+    for x in t:
+        if str(x["songID"]) == reqSONGID:
+            return str(json.dumps({"message": "The song you had requested is already in queue. Don't worry, as your song might be after within the next few songs.", "error": 1}))
+    connection.execute("""INSERT INTO `requests` (`songID`, `username`, `userIP`, `message`, `requested`) VALUES (""" + str(reqSONGID) + """, '""" + reqUSERNAME + """', '""" + reqIP + """', '""" + reqMSG + """', '""" + reqTIMESTAMP + """');""")
+    return str(json.dumps({"message": "Succesful request!", "error": 0}))
 
 if __name__ == '__main__':
     logger = logging.getLogger('werkzeug')
