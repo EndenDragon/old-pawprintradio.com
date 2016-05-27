@@ -142,7 +142,7 @@ def json_update_radio_subtxt():
     mfr_json = mfr_json["icestats"]["source"]
     mfr_json.pop()
     mfr_json = mfr_json.pop()
-    return json.dumps({"title": str(mfr_json["title"], "listeners": str(mfr_json["listeners"]))})
+    return json.dumps({"title": str(mfr_json["title"], "listeners": str(mfr_json["listeners"])})
 
 #Begin Requests system
 mysql_login = file_get_contents("mysql-login.json")
