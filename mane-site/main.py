@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from xml2dict import ElementTree, XmlListConfig, XmlDictConfig
 from crossdomainfuncs import crossdomain
+from string import printable
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 import urllib2
@@ -25,8 +26,7 @@ def file_get_contents(filename):
 
 def strip_non_ascii(string):
     ''' Returns the string without non ASCII characters'''
-    stripped = (c for c in string if 0 < ord(c) < 127)
-    return ''.join(stripped)
+    return filter(lambda x: x in printable, string)
 
 def getMFRTumblr():
     response = urllib2.urlopen('http://maneframeradio.tumblr.com/api/read?start=0&num=10')
@@ -131,7 +131,7 @@ def update_radio_subtxt():
     mfr_json = mfr_json["icestats"]["source"]
     mfr_json.pop()
     mfr_json = mfr_json.pop()
-    return strip_non_ascii(str(mfr_json["title"])) + " <em>" + str(mfr_json["listeners"]) + "</em>"
+    return strip_non_ascii(mfr_json["title"]) + " <em>" + str(mfr_json["listeners"]) + "</em>"
 
 @app.route('/json/update_radio_subtxt', methods=['GET', 'OPTIONS'])
 @crossdomain(origin='*')
@@ -156,23 +156,32 @@ def requests():
         t = str(row[0]) + t
     return render_template('requestChoose.html', paginations=math.ceil((float(str(t))/25)))
 
+
+def getTable_query(index):
+    sql = "SELECT * FROM songs ORDER BY artist LIMIT %(index)s, 25"
+    t = connection.execute(sql, {
+        'index': int(index)
+    })
+    return t
+
+
 @app.route("/getTable/<index>")
 def getTable(index):
-    index = MySQLdb.escape_string(index)
-    t = connection.execute("SELECT * FROM songs ORDER BY `artist` LIMIT " + str((int(index) - 1) * 25) + ", 25")
+    t = getTable_query(index)
     m = ""
     for x in t:
         m = m + "<tr>" + "<td>" + str(x["ID"]) + "</td>" + "<td>" + str(x["artist"]) + "</td>" + "<td>" + str(x["title"]) + "</td>" + '''<td><a href="reqForm/''' + str(x["ID"]) + '''"><button type="button">Request Song</button></a></td>''' + "</tr>"
     return '<table border="1" style="width:100%"><tr style="font-size: 30px;"><td>ID</td><td>Artist</td><td>Title</td><td>Action</td></tr><br>' + m + "</table>"
 
+
 @app.route("/json/getTable/<index>")
 def json_getTable(index):
-    index = MySQLdb.escape_string(index)
-    t = connection.execute("SELECT * FROM songs ORDER BY `artist` LIMIT " + str((int(index) - 1) * 25) + ", 25")
+    t = getTable_query(index)
     m = ""
     for x in t:
         m = m + str(json.dumps({"ID": str(x["ID"]), "artist": str(x["artist"]), "title": str(x["title"])}))
     return m
+
 
 @app.route("/json/tablePageCount")
 def json_pagesCount():
@@ -182,10 +191,18 @@ def json_pagesCount():
     a = str(json.dumps({"pagesCount": math.ceil((float(str(a))/25))}))
     return a
 
+def searchTable_query(query):
+    sql = "SELECT * FROM songs WHERE artist COLLATE UTF8_GENERAL_CI LIKE %(query)s "
+    sql+= "OR title COLLATE UTF8_GENERAL_CI LIKE %(query)s"
+    t = connection.execute(sql, {
+        'query': str(query)
+    })
+    return t
+
+
 @app.route("/searchTable/<query>")
 def searchTable(query):
-    query = MySQLdb.escape_string(query)
-    t = connection.execute("SELECT * FROM songs WHERE `artist` COLLATE UTF8_GENERAL_CI LIKE '%%" + str(query) + "%%' OR `title` COLLATE UTF8_GENERAL_CI LIKE '%%" + str(query) + "%%'")
+    t = searchTable_query(query)
     m = ""
     for x in t:
         m = m + "<tr>" + "<td>" + str(x["ID"]) + "</td>" + "<td>" + str(x["artist"]) + "</td>" + "<td>" + str(x["title"]) + "</td>" + '''<td><a href="reqForm/''' + str(x["ID"]) + '''"><button type="button">Request Song</button></a></td>''' + "</tr>"
@@ -193,8 +210,7 @@ def searchTable(query):
 
 @app.route("/json/searchTable/<query>")
 def json_searchTable(query):
-    query = MySQLdb.escape_string(query)
-    t = connection.execute("SELECT * FROM songs WHERE `artist` COLLATE UTF8_GENERAL_CI LIKE '%%" + str(query) + "%%' OR `title` COLLATE UTF8_GENERAL_CI LIKE '%%" + str(query) + "%%'")
+    t = searchTable_query(query)
     m = ""
     for x in t:
         m = m + str(json.dumps({"ID": str(x["ID"]), "artist": str(x["artist"]), "title": str(x["title"])}))
@@ -202,8 +218,10 @@ def json_searchTable(query):
 
 @app.route("/reqForm/<songid>")
 def requestForm(songid):
-    songid = MySQLdb.escape_string(songid)
-    t = connection.execute("SELECT * FROM songs WHERE `ID` LIKE  " + str(int(songid)))
+    sql = "SELECT * FROM songs WHERE id LIKE %(songid)s"
+    t = connection.execute(sql, {
+        'songid' : str(songid)
+    })
     reqID = ""
     reqTITLE = ""
     reqARTIST = ""
@@ -221,12 +239,15 @@ def request_post():
         remote_addr = next((addr for addr in reversed(route)
                             if addr not in trusted_proxies), request.remote_addr)
 
-        reqSONGID = MySQLdb.escape_string(str(request.form['reqSONGID']))
-        reqUSERNAME = MySQLdb.escape_string(str(request.form['reqUSERNAME'])).replace("%", "")
+        reqSONGID = str(request.form['reqSONGID'])
         reqIP = str(remote_addr)
-        reqMSG = MySQLdb.escape_string(str(request.form['reqMSG'])).replace("%", "")
+        reqMSG = str(request.form['reqMSG']).replace('%', '')
+        reqUSERNAME = str(request.form['reqUSERNAME']).replace('%', '')
         reqTIMESTAMP = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
-        t = connection.execute("SELECT * FROM songs WHERE `ID` LIKE  " + str(int(reqSONGID)))
+        sql = "SELECT * FROM songs WHERE id LIKE %(song_id)s"
+        t = connection.execute(sql, {
+            'song_id': reqSONGID
+        })
         reqID = ""
         reqTITLE = ""
         reqARTIST = ""
@@ -235,50 +256,98 @@ def request_post():
             reqTITLE = strip_non_ascii(str(x["title"])) + reqTITLE
             reqARTIST = strip_non_ascii(str(x["artist"])) + reqARTIST
         date = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
-        t = connection.execute('''SELECT COUNT(*) FROM requests WHERE `requested` LIKE "%%''' + date + '''%%" AND `userIP` LIKE "''' + reqIP + '''"''')
+        sql = "SELECT count(*) FROM requests WHERE requested LIKE %(date)s "
+        sql+= "AND userIP LIKE %(ip)s"
+        t = connection.execute(sql, {
+            'date': date,
+            'ip': reqIP
+        })
         m = ""
         for z in t:
             m = str(z[0]) + m
         if int(float(m)) >= 10:
             return render_template('requestErrorInQueue.html', reqID=reqSONGID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqUSERNAME=reqUSERNAME, errorMESSAGE="you had reached the maximum daily limit (10) of requested songs. Give others a chance to shine too! Thank you for your understanding and check back tomorrow to beable to request more songs!")
-        t = connection.execute("""SELECT * FROM queuelist WHERE `songID` LIKE """ + str(reqID))
+        sql = "SELECT * FROM queuelist WHERE songID LIKE %(req_id)s"
+        t = connection.execute(sql, {
+            'req_id': reqID
+        })
         for x in t:
             if str(x["songID"]) == reqID:
                 return render_template('requestErrorInQueue.html', reqID=reqSONGID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqUSERNAME=reqUSERNAME, errorMESSAGE="the song you had requested is already in queue. Don't worry, as your song might be after within the next few songs.")
-        connection.execute("""INSERT INTO `requests` (`songID`, `username`, `userIP`, `message`, `requested`) VALUES (""" + str(reqSONGID) + """, '""" + reqUSERNAME + """', '""" + reqIP + """', '""" + reqMSG + """', '""" + reqTIMESTAMP + """');""")
+        sql = "INSERT INTO requests(songID, username, userIP, message, requested) "
+        sql+= "VALUES(%(song_id)s, %(username)s, %(ip)s, %(msg)s, %(timestamp)s)"
+        connection.execute(sql, {
+            'song_id': reqSONGID,
+            'username': reqUSERNAME,
+            'ip': reqIP,
+            'msg': reqMSG,
+            'timestamp': reqTIMESTAMP
+        })
         return render_template('requestConfirmation.html', reqID=reqSONGID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqUSERNAME=reqUSERNAME)
     return "GET IS NOT SUPPORTED ON /request-post", 403
 #End Requests System
 
+
+def bot_request_select_query(reqSONGID):
+    sql = "SELECT * FROM queuelist WHERE songID LIKE %(song_id)s"
+    t = connection.execute(sql, {
+        'song_id': reqSONGID
+    })
+    return t
+
+
+def bot_request_insert_query(reqSONGID, reqUSERNAME, reqIP, reqMSG, reqTIMESTAMP):
+    sql = "INSERT INTO requests(songID, username, userIP, message, requested) "
+    sql+= "VALUES (%(song_id)s, %(username)s, %(ip)s, %(timestamp)s"
+    connection.execute(sql, {
+        'song_id': reqSONGID,
+        'username': reqUSERNAME,
+        'ip': reqIP,
+        'msg': reqMSG,
+        'timestamp': reqTIMESTAMP
+    })
+
 #For the bot
 @app.route("/bot-request-post", methods=['POST'])
 def bot_request_post():
-    reqSONGID = MySQLdb.escape_string(str(request.form['reqSONGID']))
-    reqUSERNAME = MySQLdb.escape_string(str(request.form['reqUSERNAME'])).replace("%", "")
+    reqSONGID = str(request.form['reqSONGID'])
+    reqUSERNAME = str(request.form['reqUSERNAME']).replace('%', '')
     reqIP = "BOTREQUEST"
     reqMSG = ""
     reqTIMESTAMP = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
     date = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
-    t = connection.execute("""SELECT * FROM queuelist WHERE `songID` LIKE """ + str(reqSONGID))
+    t = bot_request_select_query(reqSONGID)
     for x in t:
         if str(x["songID"]) == reqSONGID:
             return "The song you had requested is already in queue. Don't worry, as your song might be after within the next few songs."
-    connection.execute("""INSERT INTO `requests` (`songID`, `username`, `userIP`, `message`, `requested`) VALUES (""" + str(reqSONGID) + """, '""" + reqUSERNAME + """', '""" + reqIP + """', '""" + reqMSG + """', '""" + reqTIMESTAMP + """');""")
+    bot_request_insert_query(
+        reqSONGID,
+        reqUSERNAME,
+        reqIP,
+        reqMSG,
+        reqTIMESTAMP
+    )
     return "1"
 
 @app.route("/json/bot-request-post", methods=['POST'])
 def json_bot_request_post():
-    reqSONGID = MySQLdb.escape_string(str(request.form['reqSONGID']))
-    reqUSERNAME = MySQLdb.escape_string(str(request.form['reqUSERNAME'])).replace("%", "")
+    reqSONGID = str(request.form['reqSONGID'])
+    reqUSERNAME = str(request.form['reqUSERNAME']).replace('%', '')
     reqIP = "BOTREQUEST"
     reqMSG = ""
     reqTIMESTAMP = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
     date = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
-    t = connection.execute("""SELECT * FROM queuelist WHERE `songID` LIKE """ + str(reqSONGID))
+    t = bot_request_select_query(reqSONGID)
     for x in t:
         if str(x["songID"]) == reqSONGID:
             return str(json.dumps({"message": "The song you had requested is already in queue. Don't worry, as your song might be after within the next few songs.", "error": 1}))
-    connection.execute("""INSERT INTO `requests` (`songID`, `username`, `userIP`, `message`, `requested`) VALUES (""" + str(reqSONGID) + """, '""" + reqUSERNAME + """', '""" + reqIP + """', '""" + reqMSG + """', '""" + reqTIMESTAMP + """');""")
+    bot_request_insert_query(
+        reqSONGID,
+        reqUSERNAME,
+        reqIP,
+        reqMSG,
+        reqTIMESTAMP
+    )
     return str(json.dumps({"message": "Succesful request!", "error": 0}))
 
 if __name__ == '__main__':
