@@ -1,5 +1,5 @@
 # The Mane Frame Radio Website Repository
-**By [EndenDragon](http://twitter.com/EndenDragon) | [http://mane-frame.com](http://mane-frame.com)**
+**By [EndenDragon](http://twitter.com/EndenDragon) | [http://pawprintradio.com](http://pawprintradio.com)**
 
 This is the Mane Frame Radio's website. It is currently actively developed by the web developer, EndenDragon. The site is built using Flask as the foundation on Python 2.7.9. Contributing some code, or write some paragraphs are greatly appreciated.
 
