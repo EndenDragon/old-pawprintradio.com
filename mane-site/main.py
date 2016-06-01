@@ -15,11 +15,13 @@ import re
 import logging
 import HTMLParser
 import subprocess
+from werkzeug.contrib.fixers import ProxyFix
 
 app = Flask(__name__)
 os.environ['TZ'] = 'America/Los_Angeles'
 gitRevision = commands.getoutput("git rev-parse --short master")
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 def file_get_contents(filename):
     with open(os.path.dirname(os.path.realpath(__file__)) + "/" + filename) as f:
