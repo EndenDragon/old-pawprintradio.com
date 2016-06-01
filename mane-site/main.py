@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, abort
 from xml2dict import ElementTree, XmlListConfig, XmlDictConfig
 from crossdomainfuncs import crossdomain
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -14,10 +14,12 @@ import math
 import re
 import logging
 import HTMLParser
+import subprocess
 
 app = Flask(__name__)
 os.environ['TZ'] = 'America/Los_Angeles'
 gitRevision = commands.getoutput("git rev-parse --short master")
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 def file_get_contents(filename):
     with open(os.path.dirname(os.path.realpath(__file__)) + "/" + filename) as f:
@@ -280,6 +282,19 @@ def json_bot_request_post():
             return str(json.dumps({"message": "The song you had requested is already in queue. Don't worry, as your song might be after within the next few songs.", "error": 1}))
     connection.execute("""INSERT INTO `requests` (`songID`, `username`, `userIP`, `message`, `requested`) VALUES (""" + str(reqSONGID) + """, '""" + reqUSERNAME + """', '""" + reqIP + """', '""" + reqMSG + """', '""" + reqTIMESTAMP + """');""")
     return str(json.dumps({"message": "Succesful request!", "error": 0}))
+
+@app.route("/gitlabUpdate", methods=['POST'])
+def gitlabUpdate():
+    app_config = file_get_contents("config.json")
+    app_config = json.loads(app_config)
+    if request.headers.get("X-Gitlab-Token", "") == app_config["gitlabWebhookSecret"]:
+        try:
+            subprocess.Popen("git pull", shell=True).wait()
+        except OSError:
+            return "ERROR", 500
+        return "OK", 200
+    else:
+        return "ERROR", 401
 
 if __name__ == '__main__':
     logger = logging.getLogger('werkzeug')
