@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, abort
 from xml2dict import ElementTree, XmlListConfig, XmlDictConfig
 from crossdomainfuncs import crossdomain
 from string import printable
@@ -15,10 +15,14 @@ import math
 import re
 import logging
 import HTMLParser
+import subprocess
+from werkzeug.contrib.fixers import ProxyFix
 
 app = Flask(__name__)
 os.environ['TZ'] = 'America/Los_Angeles'
 gitRevision = commands.getoutput("git rev-parse --short master")
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 def file_get_contents(filename):
     with open(os.path.dirname(os.path.realpath(__file__)) + "/" + filename) as f:
@@ -349,6 +353,19 @@ def json_bot_request_post():
         reqTIMESTAMP
     )
     return str(json.dumps({"message": "Succesful request!", "error": 0}))
+
+@app.route("/gitlabUpdate", methods=['POST'])
+def gitlabUpdate():
+    app_config = file_get_contents("config.json")
+    app_config = json.loads(app_config)
+    if request.headers.get("X-Gitlab-Token", "") == app_config["gitlabWebhookSecret"]:
+        try:
+            subprocess.Popen("git pull", shell=True).wait()
+        except OSError:
+            return "ERROR", 500
+        return "OK", 200
+    else:
+        return "ERROR", 401
 
 if __name__ == '__main__':
     logger = logging.getLogger('werkzeug')
