@@ -130,8 +130,7 @@ def update_radio_subtxt():
     xsl = response.read()
     mfr_json = json.loads(xsl)
     mfr_json = mfr_json["icestats"]["source"]
-    mfr_json.pop()
-    mfr_json = mfr_json.pop()
+    mfr_json = mfr_json
     return strip_non_ascii(mfr_json["title"]) + " <em>" + str(mfr_json["listeners"]) + "</em>"
 
 @app.route('/json/update_radio_subtxt', methods=['GET', 'OPTIONS'])
@@ -141,8 +140,7 @@ def json_update_radio_subtxt():
     xsl = response.read()
     mfr_json = json.loads(xsl)
     mfr_json = mfr_json["icestats"]["source"]
-    mfr_json.pop()
-    mfr_json = mfr_json.pop()
+    mfr_json = mfr_json
     return str(json.dumps({"title": str(mfr_json["title"]), "listeners": str(mfr_json["listeners"])}))
 
 #Begin Requests system
