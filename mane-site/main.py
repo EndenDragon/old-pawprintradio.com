@@ -151,7 +151,6 @@ def json_update_radio_subtxt():
     return str(json.dumps({"title": str(mfr_json["title"]), "listeners": str(mfr_json["listeners"])}))
 
 #Begin Requests system
-<<<<<<< HEAD
 # mysql_login = file_get_contents("mysql-login.json")
 # mysql_login = json.loads(mysql_login)
 #engine = create_engine('mysql://' + str(mysql_login["username"]) + ':' + str(mysql_login["password"]) + '@' + str(mysql_login["ip"]) + ':' + str(mysql_login["port"]) + '/' + str(mysql_login["database"]))
@@ -287,7 +286,7 @@ def json_update_radio_subtxt():
 #             return str(json.dumps({"message": "The song you had requested is already in queue. Don't worry, as your song might be after within the next few songs.", "error": 1}))
 #     connection.execute("""INSERT INTO `requests` (`songID`, `username`, `userIP`, `message`, `requested`) VALUES (""" + str(reqSONGID) + """, '""" + reqUSERNAME + """', '""" + reqIP + """', '""" + reqMSG + """', '""" + reqTIMESTAMP + """');""")
 #     return str(json.dumps({"message": "Succesful request!", "error": 0}))
-=======
+
 mysql_login = file_get_contents("mysql-login.json")
 mysql_login = json.loads(mysql_login)
 engine = create_engine('mysql://' + str(mysql_login["username"]) + ':' + str(mysql_login["password"]) + '@' + str(mysql_login["ip"]) + ':' + str(mysql_login["port"]) + '/' + str(mysql_login["database"]))
@@ -492,7 +491,6 @@ def json_bot_request_post():
         reqTIMESTAMP
     )
     return str(json.dumps({"message": "Succesful request!", "error": 0}))
->>>>>>> origin/master
 
 @app.route("/gitlabUpdate", methods=['POST'])
 def gitlabUpdate():
