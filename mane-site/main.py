@@ -1,6 +1,12 @@
 from flask import Flask, render_template, request, jsonify, abort
 from xml2dict import ElementTree, XmlListConfig, XmlDictConfig
 from crossdomainfuncs import crossdomain
+<<<<<<< HEAD
+=======
+from string import printable
+from flask.ext.sqlalchemy import SQLAlchemy
+from sqlalchemy import *
+>>>>>>> origin/master
 import urllib2
 import json
 import commands
@@ -26,8 +32,7 @@ def file_get_contents(filename):
 
 def strip_non_ascii(string):
     ''' Returns the string without non ASCII characters'''
-    stripped = (c for c in string if 0 < ord(c) < 127)
-    return ''.join(stripped)
+    return filter(lambda x: x in printable, string)
 
 def getMFRTumblr():
     response = urllib2.urlopen('http://maneframeradio.tumblr.com/api/read?start=0&num=10')
@@ -132,7 +137,7 @@ def update_radio_subtxt():
     mfr_json = mfr_json["icestats"]["source"]
     mfr_json.pop()
     mfr_json = mfr_json.pop()
-    return strip_non_ascii(str(mfr_json["title"])) + " <em>" + str(mfr_json["listeners"]) + "</em>"
+    return strip_non_ascii(mfr_json["title"]) + " <em>" + str(mfr_json["listeners"]) + "</em>"
 
 @app.route('/json/update_radio_subtxt', methods=['GET', 'OPTIONS'])
 @crossdomain(origin='*')
@@ -146,6 +151,7 @@ def json_update_radio_subtxt():
     return str(json.dumps({"title": str(mfr_json["title"]), "listeners": str(mfr_json["listeners"])}))
 
 #Begin Requests system
+<<<<<<< HEAD
 # mysql_login = file_get_contents("mysql-login.json")
 # mysql_login = json.loads(mysql_login)
 #engine = create_engine('mysql://' + str(mysql_login["username"]) + ':' + str(mysql_login["password"]) + '@' + str(mysql_login["ip"]) + ':' + str(mysql_login["port"]) + '/' + str(mysql_login["database"]))
@@ -281,6 +287,212 @@ def json_update_radio_subtxt():
 #             return str(json.dumps({"message": "The song you had requested is already in queue. Don't worry, as your song might be after within the next few songs.", "error": 1}))
 #     connection.execute("""INSERT INTO `requests` (`songID`, `username`, `userIP`, `message`, `requested`) VALUES (""" + str(reqSONGID) + """, '""" + reqUSERNAME + """', '""" + reqIP + """', '""" + reqMSG + """', '""" + reqTIMESTAMP + """');""")
 #     return str(json.dumps({"message": "Succesful request!", "error": 0}))
+=======
+mysql_login = file_get_contents("mysql-login.json")
+mysql_login = json.loads(mysql_login)
+engine = create_engine('mysql://' + str(mysql_login["username"]) + ':' + str(mysql_login["password"]) + '@' + str(mysql_login["ip"]) + ':' + str(mysql_login["port"]) + '/' + str(mysql_login["database"]))
+connection = engine.connect()
+@app.route("/requests")
+def requests():
+    t = ""
+    for row in connection.execute("SELECT COUNT(*) FROM songs"):
+        t = str(row[0]) + t
+    return render_template('requestChoose.html', paginations=math.ceil((float(str(t))/25)))
+
+
+def getTable_query(index):
+    sql = "SELECT * FROM songs ORDER BY artist LIMIT %(index)s, 25"
+    t = connection.execute(sql, {
+        'index': int(index)
+    })
+    return t
+
+
+@app.route("/getTable/<index>")
+def getTable(index):
+    t = getTable_query(index)
+    m = ""
+    for x in t:
+        m = m + "<tr>" + "<td>" + str(x["ID"]) + "</td>" + "<td>" + str(x["artist"]) + "</td>" + "<td>" + str(x["title"]) + "</td>" + '''<td><a href="reqForm/''' + str(x["ID"]) + '''"><button type="button">Request Song</button></a></td>''' + "</tr>"
+    return '<table border="1" style="width:100%"><tr style="font-size: 30px;"><td>ID</td><td>Artist</td><td>Title</td><td>Action</td></tr><br>' + m + "</table>"
+
+
+@app.route("/json/getTable/<index>")
+def json_getTable(index):
+    t = getTable_query(index)
+    m = ""
+    for x in t:
+        m = m + str(json.dumps({"ID": str(x["ID"]), "artist": str(x["artist"]), "title": str(x["title"])}))
+    return m
+
+
+@app.route("/json/tablePageCount")
+def json_pagesCount():
+    a = ""
+    for row in connection.execute("SELECT COUNT(*) FROM songs"):
+        a = str(row[0]) + a
+    a = str(json.dumps({"pagesCount": math.ceil((float(str(a))/25))}))
+    return a
+
+def searchTable_query(query):
+    sql = "SELECT * FROM songs WHERE artist COLLATE UTF8_GENERAL_CI LIKE %(query)s "
+    sql+= "OR title COLLATE UTF8_GENERAL_CI LIKE %(query)s"
+    t = connection.execute(sql, {
+        'query': str(query)
+    })
+    return t
+
+
+@app.route("/searchTable/<query>")
+def searchTable(query):
+    t = searchTable_query(query)
+    m = ""
+    for x in t:
+        m = m + "<tr>" + "<td>" + str(x["ID"]) + "</td>" + "<td>" + str(x["artist"]) + "</td>" + "<td>" + str(x["title"]) + "</td>" + '''<td><a href="reqForm/''' + str(x["ID"]) + '''"><button type="button">Request Song</button></a></td>''' + "</tr>"
+    return '<table border="1" style="width:100%"><tr style="font-size: 30px;"><td>ID</td><td>Artist</td><td>Title</td><td>Action</td></tr><br>' + m + "</table>"
+
+@app.route("/json/searchTable/<query>")
+def json_searchTable(query):
+    t = searchTable_query(query)
+    m = ""
+    for x in t:
+        m = m + str(json.dumps({"ID": str(x["ID"]), "artist": str(x["artist"]), "title": str(x["title"])}))
+    return m
+
+@app.route("/reqForm/<songid>")
+def requestForm(songid):
+    sql = "SELECT * FROM songs WHERE id LIKE %(songid)s"
+    t = connection.execute(sql, {
+        'songid' : str(songid)
+    })
+    reqID = ""
+    reqTITLE = ""
+    reqARTIST = ""
+    for x in t:
+        reqID = str(x["ID"]) + reqID
+        reqTITLE = strip_non_ascii(str(x["title"])) + reqTITLE
+        reqARTIST = strip_non_ascii(str(x["artist"])) + reqARTIST
+    return render_template('requestForm.html', reqID=reqID, reqTITLE=reqTITLE, reqARTIST=reqARTIST)
+
+@app.route("/request-post", methods=['POST', 'GET'])
+def request_post():
+    if request.method == 'POST':
+        trusted_proxies = {'127.0.0.1'}  # define your own set
+        route = request.access_route + [request.remote_addr]
+        remote_addr = next((addr for addr in reversed(route)
+                            if addr not in trusted_proxies), request.remote_addr)
+
+        reqSONGID = str(request.form['reqSONGID'])
+        reqIP = str(remote_addr)
+        reqMSG = str(request.form['reqMSG']).replace('%', '')
+        reqUSERNAME = str(request.form['reqUSERNAME']).replace('%', '')
+        reqTIMESTAMP = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+        sql = "SELECT * FROM songs WHERE id LIKE %(song_id)s"
+        t = connection.execute(sql, {
+            'song_id': reqSONGID
+        })
+        reqID = ""
+        reqTITLE = ""
+        reqARTIST = ""
+        for x in t:
+            reqID = str(x["ID"]) + reqID
+            reqTITLE = strip_non_ascii(str(x["title"])) + reqTITLE
+            reqARTIST = strip_non_ascii(str(x["artist"])) + reqARTIST
+        date = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
+        sql = "SELECT count(*) FROM requests WHERE requested LIKE %(date)s "
+        sql+= "AND userIP LIKE %(ip)s"
+        t = connection.execute(sql, {
+            'date': date,
+            'ip': reqIP
+        })
+        m = ""
+        for z in t:
+            m = str(z[0]) + m
+        if int(float(m)) >= 10:
+            return render_template('requestErrorInQueue.html', reqID=reqSONGID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqUSERNAME=reqUSERNAME, errorMESSAGE="you had reached the maximum daily limit (10) of requested songs. Give others a chance to shine too! Thank you for your understanding and check back tomorrow to beable to request more songs!")
+        sql = "SELECT * FROM queuelist WHERE songID LIKE %(req_id)s"
+        t = connection.execute(sql, {
+            'req_id': reqID
+        })
+        for x in t:
+            if str(x["songID"]) == reqID:
+                return render_template('requestErrorInQueue.html', reqID=reqSONGID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqUSERNAME=reqUSERNAME, errorMESSAGE="the song you had requested is already in queue. Don't worry, as your song might be after within the next few songs.")
+        sql = "INSERT INTO requests(songID, username, userIP, message, requested) "
+        sql+= "VALUES(%(song_id)s, %(username)s, %(ip)s, %(msg)s, %(timestamp)s)"
+        connection.execute(sql, {
+            'song_id': reqSONGID,
+            'username': reqUSERNAME,
+            'ip': reqIP,
+            'msg': reqMSG,
+            'timestamp': reqTIMESTAMP
+        })
+        return render_template('requestConfirmation.html', reqID=reqSONGID, reqTITLE=reqTITLE, reqARTIST=reqARTIST, reqUSERNAME=reqUSERNAME)
+    return "GET IS NOT SUPPORTED ON /request-post", 403
+#End Requests System
+
+
+def bot_request_select_query(reqSONGID):
+    sql = "SELECT * FROM queuelist WHERE songID LIKE %(song_id)s"
+    t = connection.execute(sql, {
+        'song_id': reqSONGID
+    })
+    return t
+
+
+def bot_request_insert_query(reqSONGID, reqUSERNAME, reqIP, reqMSG, reqTIMESTAMP):
+    sql = "INSERT INTO requests(songID, username, userIP, message, requested) "
+    sql+= "VALUES (%(song_id)s, %(username)s, %(ip)s, %(timestamp)s"
+    connection.execute(sql, {
+        'song_id': reqSONGID,
+        'username': reqUSERNAME,
+        'ip': reqIP,
+        'msg': reqMSG,
+        'timestamp': reqTIMESTAMP
+    })
+
+#For the bot
+@app.route("/bot-request-post", methods=['POST'])
+def bot_request_post():
+    reqSONGID = str(request.form['reqSONGID'])
+    reqUSERNAME = str(request.form['reqUSERNAME']).replace('%', '')
+    reqIP = "BOTREQUEST"
+    reqMSG = ""
+    reqTIMESTAMP = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+    date = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
+    t = bot_request_select_query(reqSONGID)
+    for x in t:
+        if str(x["songID"]) == reqSONGID:
+            return "The song you had requested is already in queue. Don't worry, as your song might be after within the next few songs."
+    bot_request_insert_query(
+        reqSONGID,
+        reqUSERNAME,
+        reqIP,
+        reqMSG,
+        reqTIMESTAMP
+    )
+    return "1"
+
+@app.route("/json/bot-request-post", methods=['POST'])
+def json_bot_request_post():
+    reqSONGID = str(request.form['reqSONGID'])
+    reqUSERNAME = str(request.form['reqUSERNAME']).replace('%', '')
+    reqIP = "BOTREQUEST"
+    reqMSG = ""
+    reqTIMESTAMP = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+    date = str(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
+    t = bot_request_select_query(reqSONGID)
+    for x in t:
+        if str(x["songID"]) == reqSONGID:
+            return str(json.dumps({"message": "The song you had requested is already in queue. Don't worry, as your song might be after within the next few songs.", "error": 1}))
+    bot_request_insert_query(
+        reqSONGID,
+        reqUSERNAME,
+        reqIP,
+        reqMSG,
+        reqTIMESTAMP
+    )
+    return str(json.dumps({"message": "Succesful request!", "error": 0}))
+>>>>>>> origin/master
 
 @app.route("/gitlabUpdate", methods=['POST'])
 def gitlabUpdate():
