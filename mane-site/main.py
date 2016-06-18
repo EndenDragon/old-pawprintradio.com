@@ -137,7 +137,7 @@ def update_radio_subtxt():
 @app.route('/json/update_radio_subtxt', methods=['GET', 'OPTIONS'])
 @crossdomain(origin='*')
 def json_update_radio_subtxt():
-    response = urllib2.urlopen('http://radio.pawprintradio.com/status-json.xsl')
+    response = urllib2.urlopen('https://radio.pawprintradio.com/status-json.xsl')
     xsl = response.read()
     mfr_json = json.loads(xsl)
     mfr_json = mfr_json["icestats"]["source"]
