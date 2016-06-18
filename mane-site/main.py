@@ -1,12 +1,9 @@
 from flask import Flask, render_template, request, jsonify, abort
 from xml2dict import ElementTree, XmlListConfig, XmlDictConfig
 from crossdomainfuncs import crossdomain
-<<<<<<< HEAD
-=======
 from string import printable
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import *
->>>>>>> origin/master
 import urllib2
 import json
 import commands
