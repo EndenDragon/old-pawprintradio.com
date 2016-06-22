@@ -10,6 +10,7 @@ body {
     height: 100%;
     margin: 0;
     max-width: 100%;
+    word-wrap: break-word;
 }
 hr {
     display: block;
@@ -141,7 +142,7 @@ hr {
 }
 .navbar-custom .navbar-toggle:hover,
 .navbar-custom .navbar-toggle:focus {
-    background-color: #dddddd;
+    background-color: #525252;
 }
 .navbar-custom .navbar-toggle .icon-bar {
     background-color: #cccccc;
@@ -250,6 +251,12 @@ hr {
 }
 .heading-subtxt {
     font-size: 40px;
+}
+
+.blog-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 /* Panel */
