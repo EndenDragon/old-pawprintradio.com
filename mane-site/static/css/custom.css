@@ -46,6 +46,9 @@ hr {
     position: relative;
     top: -15px;
     left: -20px;
+    /* B&W Logo */
+    background-color: white;
+    border-radius: 20px;
 }
 @media (min-width: 768px) {
     .logoimage {
