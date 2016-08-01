@@ -20,6 +20,21 @@
     <!-- Bootstrap Slider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.0/bootstrap-slider.min.js"></script>
 
+    <!-- Load player if #player is in the URL -->
+    <script>
+      //When page loads
+      if (window.location.hash.toLowerCase() == "#player") {
+        $('#playerModal').modal('show')
+      }
+
+      //When hash has changed
+      $(window).on("hashchange", function () {
+        if (window.location.hash.toLowerCase() == "#player") {
+          $('#playerModal').modal('show')
+        }
+      });
+    </script>
+
     <!-- Updates the player text -->
     <script>
       setInterval(                               //Periodically
