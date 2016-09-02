@@ -2,5 +2,7 @@
   "ip": "0.0.0.0",
   "port": "5000",
   "debug": "True",
-  "gitlabWebhookSecret": "rainbowdashisthebestponyever"
+  "gitlabWebhookSecret": "rainbowdashisthebestponyever",
+  "requestsListURL": "https://radio.pawprintradio.com/api/requests/list/id/1",
+  "requestsSubmitURL": "https://radio.pawprintradio.com/api/requests/submit/id/1/song_id/"
 }
