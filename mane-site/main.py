@@ -102,8 +102,8 @@ def getReqSongs(count=False):
 def submitReqSong(id):
     config_file = file_get_contents("config.json")
     config_file = json.loads(config_file)
-    songListEndpoint = config_file["requestsSubmitURL"]
-    response = urllib2.urlopen(songListEndpoint+str(id)).read()
+    songListEndpoint = config_file["requestsSubmitURL"] + str(id) + "?key=" + config_file["azuracastAPIKey"]
+    response = urllib2.urlopen(songListEndpoint).read()
     response = json.loads(response)
     if response["status"] == "success":
         return {'status': True}
