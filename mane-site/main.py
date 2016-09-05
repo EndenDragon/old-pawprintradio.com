@@ -143,29 +143,27 @@ def partners():
 def contact():
     return render_template('header.html', title="Contact") + render_template('menu.html', activeContact="active") + render_template('contact.html') + render_template('sidebar.html', revision=gitRevision) + render_template('player.html') + render_template('footer.html')
 
-@app.route('/update_radio_subtxt', methods=['GET', 'OPTIONS'])
+@app.route('/update_radio_subtxt', methods=['GET'])
 @crossdomain(origin='*')
 def update_radio_subtxt():
-    response = urllib2.urlopen('https://radio.pawprintradio.com/icecast/status-json.xsl')
+    response = urllib2.urlopen('https://radio.pawprintradio.com/api/nowplaying/index/1')
     xsl = response.read()
     mfr_json = json.loads(xsl)
-    mfr_json = mfr_json["icestats"]["source"]
-    mfr_json = mfr_json
-    mfr_json.pop()
-    mfr_json = mfr_json[0]
-    return fix_ascii(mfr_json["title"]) + " <em>" + str(mfr_json["listeners"]) + "</em>"
+    mfr_json = mfr_json['result'][0]
+    curr_song = mfr_json['current_song']
+    listeners = mfr_json['listeners']
+    return fix_ascii(curr_song['text']) + " <em>" + str(listeners["current"]) + "</em>"
 
-@app.route('/json/update_radio_subtxt', methods=['GET', 'OPTIONS'])
+@app.route('/update_radio_subtxt/json', methods=['GET'])
 @crossdomain(origin='*')
-def json_update_radio_subtxt():
-    response = urllib2.urlopen('https://radio.pawprintradio.com/icecast/status-json.xsl')
+def update_radio_subtxt_json():
+    response = urllib2.urlopen('https://radio.pawprintradio.com/api/nowplaying/index/1')
     xsl = response.read()
     mfr_json = json.loads(xsl)
-    mfr_json = mfr_json["icestats"]["source"]
-    mfr_json = mfr_json
-    mfr_json.pop()
-    mfr_json = mfr_json[0]
-    return str(json.dumps({"title": str(mfr_json["title"]), "listeners": str(mfr_json["listeners"])}))
+    mfr_json = mfr_json['result'][0]
+    curr_song = mfr_json['current_song']
+    listeners = mfr_json['listeners']
+    return jsonify({'text': fix_ascii(curr_song['text']), 'title': fix_ascii(curr_song['title']), 'artist': fix_ascii(curr_song['artist']), 'listeners': listeners["current"]})
 
 #Begin Requests system
 @app.route("/requests")
