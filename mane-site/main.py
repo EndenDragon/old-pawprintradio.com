@@ -149,7 +149,7 @@ def update_radio_subtxt():
     response = urllib2.urlopen('https://radio.pawprintradio.com/api/nowplaying/1')
     xsl = response.read()
     mfr_json = json.loads(xsl)
-    mfr_json = mfr_json['result'][0]
+    mfr_json = mfr_json['result']
     curr_song = mfr_json['current_song']
     listeners = mfr_json['listeners']
     return fix_ascii(curr_song['text']) + " <em>" + str(listeners["current"]) + "</em>"
@@ -160,7 +160,7 @@ def update_radio_subtxt_json():
     response = urllib2.urlopen('https://radio.pawprintradio.com/api/nowplaying/1')
     xsl = response.read()
     mfr_json = json.loads(xsl)
-    mfr_json = mfr_json['result'][0]
+    mfr_json = mfr_json['result']
     curr_song = mfr_json['current_song']
     listeners = mfr_json['listeners']
     return jsonify({'text': fix_ascii(curr_song['text']), 'title': fix_ascii(curr_song['title']), 'artist': fix_ascii(curr_song['artist']), 'listeners': listeners["current"]})
