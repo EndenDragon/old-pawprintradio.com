@@ -146,7 +146,7 @@ def contact():
 @app.route('/update_radio_subtxt', methods=['GET'])
 @crossdomain(origin='*')
 def update_radio_subtxt():
-    response = urllib2.urlopen('https://radio.pawprintradio.com/api/nowplaying/index/1')
+    response = urllib2.urlopen('https://radio.pawprintradio.com/api/nowplaying/1')
     xsl = response.read()
     mfr_json = json.loads(xsl)
     mfr_json = mfr_json['result'][0]
@@ -157,7 +157,7 @@ def update_radio_subtxt():
 @app.route('/update_radio_subtxt/json', methods=['GET'])
 @crossdomain(origin='*')
 def update_radio_subtxt_json():
-    response = urllib2.urlopen('https://radio.pawprintradio.com/api/nowplaying/index/1')
+    response = urllib2.urlopen('https://radio.pawprintradio.com/api/nowplaying/1')
     xsl = response.read()
     mfr_json = json.loads(xsl)
     mfr_json = mfr_json['result'][0]
